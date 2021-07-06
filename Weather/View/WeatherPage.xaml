@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Weather.ViewModel"
+             mc:Ignorable="d"
+             x:Class="Weather.View.WeatherPage">
+    
+    <ContentPage.BindingContext>
+        <local:WeatherViewModel/>
+    </ContentPage.BindingContext>
+
+    <RefreshView Command="{Binding LoadItemsCommand}"
+                         IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <StackLayout>
+                    <ScrollView>
+                        <ListView ItemsSource="{Binding Week}"
+                                  SeparatorVisibility="None"
+                                  HasUnevenRows="True"
+                                  Margin="0,0,0,0">
+                            <ListView.Background>
+                                <LinearGradientBrush StartPoint="0,0"
+                                                     EndPoint="1,1">
+                                    <GradientStop Color="DarkGray"
+                                                  Offset="0.2" />
+                                    <GradientStop Color="#494085"
+                                                  Offset="0.9" />
+                                </LinearGradientBrush>
+                            </ListView.Background>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="20"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                
+                                                    <Frame CornerRadius="15"
+                                                           Padding="5,5,5,5"
+                                                           HasShadow="True"
+                                                           Margin="20,0,20,-5"
+                                                           Grid.ColumnSpan="6"
+                                                           Grid.Column="0">
+                                                        <Label Text="{Binding Name}"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontSize="Medium"
+                                                               Margin="0"
+                                                               FontAttributes="Bold"
+                                                               TextColor="Black"
+                                                               Padding="0,-3,0,0">
+                                                        </Label>
+                                                    </Frame>
+
+                                                    <Frame CornerRadius="15"
+                                                           Padding="5,5,5,5"
+                                                           HasShadow="True"
+                                                           Margin="20,0,20,-5"
+                                                           Grid.ColumnSpan="6"
+                                                           Grid.Column="5">
+                                                        <Label Text="{Binding Temp}"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontSize="Medium"
+                                                               TextColor="Black"
+                                                               Margin="0"
+                                                               Padding="0,-3,0,0">
+                                          
+                                                        </Label>
+                                                    </Frame>
+
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Grid.ColumnSpan="9"
+                                                            NumberOfTapsRequired="1" 
+                                                            CommandParameter="{Binding .}">
+                                                        </TapGestureRecognizer>
+                                                    </Grid.GestureRecognizers>
+                                                </Grid>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollView>
+                </StackLayout>
+            </RefreshView>
+</ContentPage>
