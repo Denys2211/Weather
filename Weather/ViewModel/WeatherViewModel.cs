@@ -12,16 +12,20 @@ namespace Weather.ViewModel
     {
         public ObservableCollection<Days> Week { get; set; }
 
+        readonly Days[] days;
+
         public Command LoadItemsCommand { get; set; }
 
         public WeatherViewModel()
         {
+            days = new Days[7];
+            Week = new ObservableCollection<Days>();
             GetForecast();
             LoadItemsCommand = new Command(() => GetForecast());
-            Week = new ObservableCollection<Days>();
+            
         }
 
-        private string Lviv = "lat=49.50&lon=-24.00";
+        private string Lviv = "lat=49.839683&lon=24.029717";
 
         private async void GetForecast()
         {
@@ -30,55 +34,21 @@ namespace Weather.ViewModel
 
             if (result.Successful)
             {
-                Week.Clear();
                 IsBusy = true;
                 try
                 {
+                    Week.Clear();
+
                     var forcastInfo = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
-                    Days oneDay = new Days
+                    for (int i = 0; i <7; i++)
                     {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[0].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[0].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[0].temp.day.ToString("0")
-                    }; Week.Add(oneDay);
-                    Days twoDay = new Days
-                    {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[1].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[1].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[1].temp.day.ToString("0")
-                    }; Week.Add(twoDay);
-                    Days threeDay = new Days
-                    {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[2].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[2].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[2].temp.day.ToString("0")
-                    }; Week.Add(threeDay);
-                    Days fourDay = new Days
-                    {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[3].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[3].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[3].temp.day.ToString("0")
-                    }; Week.Add(fourDay);
-                    Days fiveDay = new Days
-                    {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[4].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[4].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[4].temp.day.ToString("0")
-                    }; Week.Add(fiveDay);
-                    Days sixDay = new Days
-                    {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[5].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[5].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[5].temp.day.ToString("0")
-                    }; Week.Add(sixDay);
-                    Days sevenDay = new Days
-                    {
-                        Name = UnixTimeStampToDateTime(forcastInfo.daily[6].dt).ToString("dddd"),
-                        Date = UnixTimeStampToDateTime(forcastInfo.daily[6].dt).ToString("dd MMM"),
-                        Temp = forcastInfo.daily[6].temp.day.ToString("0")
-                    }; Week.Add(sevenDay);
-
+                        days[i] = new Days();
+                        days[i].Name = UnixTimeStampToDateTime(forcastInfo.daily[i].dt).ToString("dddd");
+                        days[i].Date = UnixTimeStampToDateTime(forcastInfo.daily[i].dt).ToString("dd MMM");
+                        days[i].Temp = forcastInfo.daily[i].temp.max.ToString("0");
+                        Week.Add(days[i]);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -94,7 +64,7 @@ namespace Weather.ViewModel
                 await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
         }
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        public  DateTime UnixTimeStampToDateTime(double unixTimeStamp)
         {
             DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();

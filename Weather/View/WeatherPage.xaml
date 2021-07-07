@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
 
     <RefreshView Command="{Binding LoadItemsCommand}"
-                         IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                         IsRefreshing="{Binding IsiBusy, Mode=TwoWay}">
                 <StackLayout>
                     <ScrollView>
                         <ListView ItemsSource="{Binding Week}"
