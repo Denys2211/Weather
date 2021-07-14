@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Weather.Helper;
@@ -8,7 +7,7 @@ using Xamarin.Forms;
 
 namespace Weather.ViewModel
 {
-    public class WeatherViewModel : BaseViewModel
+    public class WeatherDaysViewModel : BaseViewModel
     {
         public ObservableCollection<Days> Week { get; set; }
 
@@ -16,13 +15,11 @@ namespace Weather.ViewModel
 
         public Command LoadItemsCommand { get; set; }
 
-        public WeatherViewModel()
+        public WeatherDaysViewModel()
         {
             days = new Days[7];
             Week = new ObservableCollection<Days>();
-            GetForecast();
             LoadItemsCommand = new Command(() => GetForecast());
-            
         }
 
         private string Lviv = "lat=49.839683&lon=24.029717";
@@ -41,7 +38,7 @@ namespace Weather.ViewModel
 
                     var forcastInfo = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
-                    for (int i = 0; i <7; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         days[i] = new Days();
                         days[i].Name = UnixTimeStampToDateTime(forcastInfo.daily[i].dt).ToString("dddd");
@@ -64,11 +61,6 @@ namespace Weather.ViewModel
                 await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
         }
-        public  DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
+        
     }
 }

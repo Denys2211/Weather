@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Weather.ViewModel"
+             mc:Ignorable="d"
+             x:Class="Weather.View.WeatherDaysPage">
+    
+    <ContentPage.BindingContext>
+        <local:WeatherDaysViewModel/>
+    </ContentPage.BindingContext>
+
+    <RefreshView Command="{Binding LoadItemsCommand}" 
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <ScrollView>
+            <ListView ItemsSource="{Binding Week}"
+                      SeparatorVisibility="None"
+                      HasUnevenRows="True"
+                      Margin="0,0,0,0">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout>
+                                    <Frame>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.ColumnSpan="4"
+                                                   Text="{Binding Name}"/>
+                                            <Label Grid.Row="1"
+                                                   Grid.ColumnSpan="4"
+                                                   Text="{Binding Date}"/>
+                                            <Label Grid.Row="1"
+                                                   Grid.Column="8"
+                                                   Text="{Binding Temp,StringFormat='{0}°'}"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Grid.ColumnSpan="9"
+                                                    NumberOfTapsRequired="1" 
+                                                    CommandParameter="{Binding .}">
+                                                </TapGestureRecognizer>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </Frame>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>
