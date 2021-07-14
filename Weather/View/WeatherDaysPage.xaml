@@ -11,6 +11,18 @@
         <local:WeatherDaysViewModel/>
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelStyle" 
+                   TargetType="Label">
+                <Setter Property="FontSize" 
+                        Value="Small" />
+                <Setter Property="TextColor" 
+                        Value="Black" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <RefreshView Command="{Binding LoadItemsCommand}" 
                  IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <ScrollView>
@@ -44,11 +56,14 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.ColumnSpan="4"
+                                                   Style="{StaticResource labelStyle}"
                                                    Text="{Binding Name}"/>
                                             <Label Grid.Row="1"
+                                                   Style="{StaticResource labelStyle}"
                                                    Grid.ColumnSpan="4"
                                                    Text="{Binding Date}"/>
                                             <Label Grid.Row="1"
+                                                   Style="{StaticResource labelStyle}"
                                                    Grid.Column="8"
                                                    Text="{Binding Temp,StringFormat='{0}°'}"/>
                                             <Grid.GestureRecognizers>
