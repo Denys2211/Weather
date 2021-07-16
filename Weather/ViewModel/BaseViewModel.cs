@@ -7,7 +7,8 @@ namespace Weather.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        bool isBusy = true;
+        protected string CityCoord;
+        bool isBusy = false;
         public bool IsBusy
         {
             get { return isBusy; }
@@ -43,11 +44,5 @@ namespace Weather.ViewModel
 
         }
         #endregion
-        public DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
     }
 }

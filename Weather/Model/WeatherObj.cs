@@ -19,7 +19,7 @@ namespace Weather.Models
     }
     public class Daily
     {
-        public int dt { get; set; }
+        public long dt { get; set; }
         public int sunrise { get; set; }
         public int sunset { get; set; }
         public int moonrise { get; set; }
@@ -189,11 +189,4 @@ namespace Weather.Models
         public string description { get; set; }
         public string icon { get; set; }
     }
-    public class Days
-    {
-        public string Name { get; set; }
-        public string Date { get; set; }
-        public string Temp { get; set; }
-    }
-
 }

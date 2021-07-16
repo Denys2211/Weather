@@ -20,6 +20,7 @@
                 <Setter Property="TextColor" 
                         Value="Black" />
             </Style>
+            <local:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -57,15 +58,15 @@
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.ColumnSpan="4"
                                                    Style="{StaticResource labelStyle}"
-                                                   Text="{Binding Name}"/>
+                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:MMMM}'}"/>
                                             <Label Grid.Row="1"
                                                    Style="{StaticResource labelStyle}"
                                                    Grid.ColumnSpan="4"
-                                                   Text="{Binding Date}"/>
+                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:MM/dd/yyyy}'}"/>
                                             <Label Grid.Row="1"
                                                    Style="{StaticResource labelStyle}"
                                                    Grid.Column="8"
-                                                   Text="{Binding Temp,StringFormat='{0}°'}"/>
+                                                   Text="{Binding temp.max,StringFormat='{0}°'}"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer
                                                     Grid.ColumnSpan="9"
