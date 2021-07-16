@@ -11,7 +11,7 @@ namespace Weather
         {
             InitializeComponent();
 
-            MainPage = new WeatherDaysPage();
+            MainPage = new NavigationPage(new WeatherDaysPage());
         }
 
         protected override void OnStart()

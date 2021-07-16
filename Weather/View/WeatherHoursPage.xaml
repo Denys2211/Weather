@@ -5,10 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Weather.ViewModel"
              mc:Ignorable="d"
-             x:Class="Weather.View.WeatherDaysPage">
+             x:Class="Weather.View.WeatherHoursPage">
     
     <ContentPage.BindingContext>
-        <local:WeatherDaysViewModel/>
+        <local:WeatherHoursViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
@@ -24,10 +24,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <RefreshView Command="{Binding LoadItemsCommand}" 
-                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <ScrollView>
-            <ListView ItemsSource="{Binding Week}"
+            <ListView ItemsSource="{Binding Day}"
                       SeparatorVisibility="None"
                       HasUnevenRows="True"
                       Margin="0,0,0,0">
@@ -62,20 +60,12 @@
                                             <Label Grid.Row="1"
                                                    Style="{StaticResource labelStyle}"
                                                    Grid.ColumnSpan="4"
-                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:MM/dd/yyyy}'}"/>
+                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:HH:mm}'}"/>
                                             <Label Grid.Row="1"
                                                    Style="{StaticResource labelStyle}"
                                                    Grid.Column="8"
                                                    Grid.ColumnSpan="2"
-                                                   Text="{Binding temp.max,StringFormat='{0}°'}"/>
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Grid.ColumnSpan="9"
-                                                    NumberOfTapsRequired="1"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherDaysViewModel}}, Path=OnForecastHourly}"
-                                                    CommandParameter="{Binding .}">
-                                                </TapGestureRecognizer>
-                                            </Grid.GestureRecognizers>
+                                                   Text="{Binding temp,StringFormat='{0}°'}"/>
                                         </Grid>
                                     </Frame>
                                 </StackLayout>
@@ -85,5 +75,4 @@
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollView>
-    </RefreshView>
 </ContentPage>

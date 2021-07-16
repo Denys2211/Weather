@@ -66,7 +66,7 @@ namespace Weather.Models
     }
     public class Hourly
     {
-        public int dt { get; set; }
+        public long dt { get; set; }
         public float temp { get; set; }
         public float feels_like { get; set; }
         public int pressure { get; set; }

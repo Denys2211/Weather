@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Weather.Models;
 
 namespace Weather.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        protected string CityCoord;
+        protected static ForecastInfo ValueForecast { get; set; }
+        protected string CityCoord { get; set; }
+        protected static int Hours { get; set; }
         bool isBusy = false;
         public bool IsBusy
         {

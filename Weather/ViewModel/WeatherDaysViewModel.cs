@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Weather.Helper;
 using Weather.Models;
+using Weather.View;
 using Xamarin.Forms;
 
 namespace Weather.ViewModel
@@ -13,11 +14,14 @@ namespace Weather.ViewModel
 
         public Command LoadItemsCommand { get; set; }
 
+        public Command OnForecastHourly { get; set; }
+
         public WeatherDaysViewModel()
         {
             CityCoord = "lat=49.839683&lon=24.029717";
             Week = new ObservableCollection<Daily>();
-            LoadItemsCommand = new Command(() => GetForecastDays());
+            LoadItemsCommand = new Command(GetForecastDays);
+            OnForecastHourly = new Command<Daily>(ForecastHourly);
             IsBusy = true;
         }
         private async void GetForecastDays()
@@ -32,11 +36,11 @@ namespace Weather.ViewModel
                 {
                     Week.Clear();
 
-                    var forcastInfo = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
+                    ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
                     for (int i = 0; i < 7; i++)
                     {
-                        Week.Add(forcastInfo.daily[i]);
+                        Week.Add(ValueForecast.daily[i]);
                     }
                 }
                 catch (Exception ex)
@@ -52,6 +56,19 @@ namespace Weather.ViewModel
             {
                 await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
+        }
+        private async void ForecastHourly(Daily daily)
+        {
+            for(int i = 0; i < 8; i++)
+            {
+                if(ValueForecast.daily[i] == daily)
+                {
+                    Hours = (i + 1) * 24;
+                    break;
+                }
+            }
+
+             await App.Current.MainPage.Navigation.PushAsync(new WeatherHoursPage());
         }
         
     }
