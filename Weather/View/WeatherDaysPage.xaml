@@ -49,7 +49,7 @@
                                  Spacing="50"
                                  HorizontalOptions="Center">
                         <StackLayout VerticalOptions="Center">
-                            <Image  Source="{Binding Week[0].weather[0].icon}"
+                            <Image  Source="{Binding Week[0].weather[0].icon, StringFormat='w{0}'}"
                                     WidthRequest="67"
                                     HeightRequest="50"/>
                             <Label  Text="Cloudy"
@@ -186,8 +186,8 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1">
-
+  <Grid Grid.Row="1">
+     <Frame CornerRadius="15">
         <RefreshView Command="{Binding LoadItemsCommand}"
                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <ListView ItemsSource="{Binding Week}" 
@@ -199,8 +199,8 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <Frame CornerRadius="15">
-                                    <Frame CornerRadius="0">
+                                
+                                    <Frame CornerRadius="0" Margin="5">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
@@ -240,7 +240,6 @@
                                                 </TapGestureRecognizer>
                                             </Grid.GestureRecognizers>
                                         </Grid>
-                                    </Frame>
                                 </Frame>
                             </ViewCell.View>
                         </ViewCell>
@@ -248,6 +247,8 @@
                 </ListView.ItemTemplate>
             </ListView>
         </RefreshView>
+    </Frame>
+
             </Grid>
         </Grid>
 </ContentPage>

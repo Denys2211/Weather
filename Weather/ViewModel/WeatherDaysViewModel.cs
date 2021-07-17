@@ -43,7 +43,7 @@ namespace Weather.ViewModel
         }
         private async void GetForecastDays()
         {
-            var url = $"https://api.openweathermap.org/data/2.5/onecall?{CityCoord}&appid=16114e1240ecc9c8df14d1a2df3864df&units=metric";
+            var url = $"https://api.openweathermap.org/data/2.5/onecall?{CityCoord}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
             var result = await ApiCaller.Get(url);
 
             if (result.Successful)
@@ -55,7 +55,7 @@ namespace Weather.ViewModel
 
                     ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
-                    Temp = ValueForecast.daily[0].temp.max;
+                    Temp = ValueForecast.hourly[3].temp;
                     OnPropertyChanged("Temp");
                     Wind = ValueForecast.daily[0].wind_speed;
                     OnPropertyChanged("Wind");
@@ -65,8 +65,8 @@ namespace Weather.ViewModel
                     OnPropertyChanged("Pressure");
                     Cloudiness = ValueForecast.daily[0].clouds;
                     OnPropertyChanged("Cloudiness");
-                    var dt = new DateTime().ToUniversalTime().AddSeconds(ValueForecast.daily[0].dt);
-                    Date = dt.ToString("d");
+                    var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(ValueForecast.daily[0].dt);
+                    Date = dt.ToString("dd.MM.yyyy");
                     for (int i = 0; i < 7; i++)
                     {
                         Week.Add(ValueForecast.daily[i]);
