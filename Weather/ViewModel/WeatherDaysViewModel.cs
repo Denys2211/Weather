@@ -20,6 +20,8 @@ namespace Weather.ViewModel
 
         public float Cloudiness { get; set; }
 
+        public string ImageWeatherSourceNow { get; set; }
+
         public float Temp { get; set; }
 
         private string date;
@@ -55,6 +57,8 @@ namespace Weather.ViewModel
 
                     ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
+                    ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
+                    OnPropertyChanged("ImageWeatherSourceNow");
                     Temp = ValueForecast.hourly[3].temp;
                     OnPropertyChanged("Temp");
                     Wind = ValueForecast.daily[0].wind_speed;

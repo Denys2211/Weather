@@ -19,7 +19,7 @@
                 <Setter Property="FontSize" 
                         Value="Small" />
                 <Setter Property="TextColor" 
-                        Value="Black" />
+                        Value="White" />
             </Style>
             <local:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
         </ResourceDictionary>
@@ -49,7 +49,7 @@
                                  Spacing="50"
                                  HorizontalOptions="Center">
                         <StackLayout VerticalOptions="Center">
-                            <Image  Source="{Binding Week[0].weather[0].icon, StringFormat='w{0}'}"
+                            <Image  Source="{Binding ImageWeatherSourceNow, StringFormat='w{0}'}"
                                     WidthRequest="67"
                                     HeightRequest="50"/>
                             <Label  Text="Cloudy"
@@ -187,7 +187,7 @@
         </Grid>
 
   <Grid Grid.Row="1">
-     <Frame CornerRadius="15">
+     <Frame CornerRadius="15" >
         <RefreshView Command="{Binding LoadItemsCommand}"
                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
             <ListView ItemsSource="{Binding Week}" 
@@ -200,7 +200,7 @@
                         <ViewCell>
                             <ViewCell.View>
                                 
-                                    <Frame CornerRadius="0" Margin="5">
+                                    <Frame CornerRadius="0" Margin="5" BackgroundColor="#4f97e3">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
@@ -226,6 +226,12 @@
                                                     Style="{StaticResource labelStyle}"
                                                     Grid.ColumnSpan="4"
                                                     Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+                                            <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
+                                                   HeightRequest="25"
+                                                   Grid.Row="1"
+                                                   Grid.Column="4"
+                                                   Grid.ColumnSpan="3"
+                                                   HorizontalOptions="Center"/>
                                             <Label Grid.Row="1"
                                                     Style="{StaticResource labelStyle}"
                                                     Grid.Column="8"
