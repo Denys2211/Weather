@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Weather.ViewModel"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
              x:Class="Weather.View.WeatherDaysPage">
     
     <ContentPage.BindingContext>
@@ -23,21 +24,183 @@
             <local:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+    <Grid BackgroundColor="#0fadd1">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid RowSpacing="0" BackgroundColor="#0fadd1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.Margin>
+                <OnPlatform x:TypeArguments="Thickness" iOS="0,35,0,0"/>
+            </Grid.Margin>
+            <ImageButton Source="Menu"
+                         Margin="20"
+                         WidthRequest="23"
+                         HeightRequest="25"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center" />
+            <Grid Grid.Row="1">
+                <StackLayout Spacing="20">
+                    <StackLayout Orientation="Horizontal"
+                                 Spacing="50"
+                                 HorizontalOptions="Center">
+                        <StackLayout VerticalOptions="Center">
+                            <Image  Source="{Binding Week[0].weather[0].icon}"
+                                    WidthRequest="67"
+                                    HeightRequest="50"/>
+                            <Label  Text="Cloudy"
+                                    TextColor="White"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"/>
+                        </StackLayout>
+                        <StackLayout VerticalOptions="Center">
+                            <Label  Text="LVIV"
+                                    TextColor="White"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"/>
+                            <Label  Text="{Binding Date}"
+                                    TextColor="White"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="Center"
+                                     Spacing="0">
+                            <Label Text="{Binding Temp, StringFormat='{}{0:#}'}"
+                                   TextColor="White"
+                                   FontSize="130"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="°"
+                                   TextColor="White"
+                                   FontSize="130"
+                                   HorizontalOptions="Center"/>
+                        </StackLayout>
+                        <Label Text="CELSIUS"
+                               Margin="0,-30,0,0"
+                               TextColor="White"
+                               FontSize="13"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                    <Grid WidthRequest="320"
+                          ColumnSpacing="10"
+                          HorizontalOptions="CenterAndExpand"
+                          VerticalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Orientation="Vertical"
+                                     Spacing="10"
+                                     HorizontalOptions="CenterAndExpand">
+                            <Image Source="humidity.png"
+                                   HeightRequest="25"
+                                   HorizontalOptions="Center"/>
+                            <StackLayout Spacing="7"
+                                         HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Humidity, StringFormat='{0}%'}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Humidity"
+                                       TextColor="White"
+                                       Margin="0,-5,0,0"
+                                       FontSize="11"
+                                       HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout Grid.Column="1"
+                                     Orientation="Vertical"
+                                     Spacing="10"
+                                     HorizontalOptions="CenterAndExpand">
+                            <Image Source="wind.png"
+                                   HeightRequest="25"
+                                   HorizontalOptions="Center"/>
+                            <StackLayout Spacing="7"
+                                         HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Wind, StringFormat='{0}m/s'}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Wind"
+                                       TextColor="White"
+                                       Margin="0,-5,0,0"
+                                       FontSize="11"
+                                       HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout Grid.Column="2"
+                                     Orientation="Vertical"
+                                     Spacing="10"
+                                     HorizontalOptions="CenterAndExpand">
+                            <Image Source="gauge.png"
+                                   HeightRequest="25"
+                                   HorizontalOptions="Center"/>
+                            <StackLayout Spacing="7"
+                                         HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Pressure, StringFormat='{0}hpa'}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Pressure"
+                                       TextColor="White"
+                                       Margin="0,-5,0,0"
+                                       FontSize="11"
+                                       HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout Grid.Column="3"
+                                     Orientation="Vertical"
+                                     Spacing="10"
+                                     HorizontalOptions="CenterAndExpand">
+                            <Image Source="cloudiness.png"
+                                   HeightRequest="25"
+                                   HorizontalOptions="Center"/>
+                            <StackLayout Spacing="7"
+                                         HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Cloudiness, StringFormat='{0}%'}"
+                                       TextColor="White"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Cloudiness"
+                                       TextColor="White"
+                                       Margin="0,-5,0,0"
+                                       FontSize="11"
+                                       HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+        </Grid>
 
-    <RefreshView Command="{Binding LoadItemsCommand}" 
-                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <ScrollView>
-            <ListView ItemsSource="{Binding Week}"
-                      SeparatorVisibility="None"
-                      HasUnevenRows="True"
-                      Margin="0,0,0,0">
+        <Grid Grid.Row="1">
+
+        <RefreshView Command="{Binding LoadItemsCommand}"
+                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding Week}" 
+                        SeparatorVisibility="Default"
+                        HasUnevenRows="True"
+                        Margin="0,0,0,0">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout>
-                                    <Frame>
+                                <Frame CornerRadius="15">
+                                    <Frame CornerRadius="0">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
@@ -57,17 +220,17 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.ColumnSpan="4"
-                                                   Style="{StaticResource labelStyle}"
-                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
+                                                    Style="{StaticResource labelStyle}"
+                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
                                             <Label Grid.Row="1"
-                                                   Style="{StaticResource labelStyle}"
-                                                   Grid.ColumnSpan="4"
-                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:MM/dd/yyyy}'}"/>
+                                                    Style="{StaticResource labelStyle}"
+                                                    Grid.ColumnSpan="4"
+                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
                                             <Label Grid.Row="1"
-                                                   Style="{StaticResource labelStyle}"
-                                                   Grid.Column="8"
-                                                   Grid.ColumnSpan="2"
-                                                   Text="{Binding temp.max,StringFormat='{0}°'}"/>
+                                                    Style="{StaticResource labelStyle}"
+                                                    Grid.Column="8"
+                                                    Grid.ColumnSpan="2"
+                                                    Text="{Binding temp.max,StringFormat='{}{0:#}°'}"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer
                                                     Grid.ColumnSpan="9"
@@ -78,12 +241,13 @@
                                             </Grid.GestureRecognizers>
                                         </Grid>
                                     </Frame>
-                                </StackLayout>
+                                </Frame>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </ScrollView>
-    </RefreshView>
+        </RefreshView>
+            </Grid>
+        </Grid>
 </ContentPage>

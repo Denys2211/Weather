@@ -113,6 +113,25 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com.png" />
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-1.png" />
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-2.png" />
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-3.png" />
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-4.png" />
+    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-5.png" />
+    <ImageAsset Include="Assets.xcassets\cloudiness.imageset\cloudiness.png" />
+    <ImageAsset Include="Assets.xcassets\cloudiness.imageset\cloudiness-1.png" />
+    <ImageAsset Include="Assets.xcassets\cloudiness.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\gauge.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\gauge.imageset\gauge.png" />
+    <ImageAsset Include="Assets.xcassets\gauge.imageset\gauge-1.png" />
+    <ImageAsset Include="Assets.xcassets\humidity.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\humidity.imageset\humidity.png" />
+    <ImageAsset Include="Assets.xcassets\humidity.imageset\humidity-1.png" />
+    <ImageAsset Include="Assets.xcassets\wind.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\wind.imageset\wind.png" />
+    <ImageAsset Include="Assets.xcassets\wind.imageset\wind-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -133,5 +152,12 @@
       <Project>{0027DA71-F7D1-47D2-9037-369356C401EA}</Project>
       <Name>Weather</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\Menu.imageset\" />
+    <Folder Include="Assets.xcassets\cloudiness.imageset\" />
+    <Folder Include="Assets.xcassets\gauge.imageset\" />
+    <Folder Include="Assets.xcassets\humidity.imageset\" />
+    <Folder Include="Assets.xcassets\wind.imageset\" />
   </ItemGroup>
 </Project>

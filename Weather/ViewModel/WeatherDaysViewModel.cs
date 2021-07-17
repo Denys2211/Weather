@@ -12,6 +12,23 @@ namespace Weather.ViewModel
     {
         public ObservableCollection<Daily> Week { get; set; }
 
+        public float Humidity { get; set; }
+
+        public float Wind { get; set; }
+
+        public float Pressure { get; set; }
+
+        public float Cloudiness { get; set; }
+
+        public float Temp { get; set; }
+
+        private string date;
+        public string Date
+        {
+            get { return date; }
+            set { date = value; OnPropertyChanged("Date"); }
+        }
+
         public Command LoadItemsCommand { get; set; }
 
         public Command OnForecastHourly { get; set; }
@@ -38,6 +55,18 @@ namespace Weather.ViewModel
 
                     ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
+                    Temp = ValueForecast.daily[0].temp.max;
+                    OnPropertyChanged("Temp");
+                    Wind = ValueForecast.daily[0].wind_speed;
+                    OnPropertyChanged("Wind");
+                    Humidity = ValueForecast.daily[0].humidity;
+                    OnPropertyChanged("Humidity");
+                    Pressure = ValueForecast.daily[0].pressure;
+                    OnPropertyChanged("Pressure");
+                    Cloudiness = ValueForecast.daily[0].clouds;
+                    OnPropertyChanged("Cloudiness");
+                    var dt = new DateTime().ToUniversalTime().AddSeconds(ValueForecast.daily[0].dt);
+                    Date = dt.ToString("d");
                     for (int i = 0; i < 7; i++)
                     {
                         Week.Add(ValueForecast.daily[i]);

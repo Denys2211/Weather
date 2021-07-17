@@ -26,7 +26,7 @@
 
         <ScrollView>
             <ListView ItemsSource="{Binding Day}"
-                      SeparatorVisibility="None"
+                      SeparatorVisibility="Default"
                       HasUnevenRows="True"
                       Margin="0,0,0,0">
 
@@ -65,7 +65,7 @@
                                                    Style="{StaticResource labelStyle}"
                                                    Grid.Column="8"
                                                    Grid.ColumnSpan="2"
-                                                   Text="{Binding temp,StringFormat='{0}°'}"/>
+                                                   Text="{Binding temp,StringFormat='{}{0:#}°'}"/>
                                         </Grid>
                                     </Frame>
                                 </StackLayout>
