@@ -26,8 +26,8 @@
     </ContentPage.Resources>
     <Grid BackgroundColor="#0fadd1">
         <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid RowSpacing="0" BackgroundColor="#0fadd1">
             <Grid.RowDefinitions>
@@ -35,7 +35,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.Margin>
-                <OnPlatform x:TypeArguments="Thickness" iOS="0,35,0,0"/>
+                <OnPlatform x:TypeArguments="Thickness"
+                            iOS="0,35,0,0"/>
             </Grid.Margin>
             <ImageButton Source="Menu"
                          Margin="20"
@@ -52,18 +53,18 @@
                             <Image  Source="{Binding ImageWeatherSourceNow, StringFormat='w{0}'}"
                                     WidthRequest="67"
                                     HeightRequest="50"/>
-                            <Label  Text="Cloudy"
+                            <Label  Text="{Binding DescriptionWeatherNow}"
                                     TextColor="White"
                                     FontSize="13"
                                     HorizontalOptions="Center"/>
                         </StackLayout>
                         <StackLayout VerticalOptions="Center">
-                            <Label  Text="LVIV"
+                            <Label  Text="{Binding Location}"
                                     TextColor="White"
                                     FontSize="20"
                                     FontAttributes="Bold"
                                     HorizontalOptions="Center"/>
-                            <Label  Text="{Binding Date}"
+                            <Label  Text="{Binding DateToday}"
                                     TextColor="White"
                                     FontSize="13"
                                     HorizontalOptions="Center"/>
@@ -73,7 +74,7 @@
                         <StackLayout Orientation="Horizontal"
                                      HorizontalOptions="Center"
                                      Spacing="0">
-                            <Label Text="{Binding Temp, StringFormat='{}{0:#}'}"
+                            <Label Text="{Binding TempNow, StringFormat='{}{0:#}'}"
                                    TextColor="White"
                                    FontSize="130"
                                    HorizontalOptions="Center"/>
@@ -106,7 +107,7 @@
                                    HorizontalOptions="Center"/>
                             <StackLayout Spacing="7"
                                          HorizontalOptions="CenterAndExpand">
-                                <Label Text="{Binding Humidity, StringFormat='{0}%'}"
+                                <Label Text="{Binding HumidityNow, StringFormat='{0}%'}"
                                        TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"
@@ -127,7 +128,7 @@
                                    HorizontalOptions="Center"/>
                             <StackLayout Spacing="7"
                                          HorizontalOptions="CenterAndExpand">
-                                <Label Text="{Binding Wind, StringFormat='{0}m/s'}"
+                                <Label Text="{Binding WindNow, StringFormat='{0}m/s'}"
                                        TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"
@@ -148,7 +149,7 @@
                                    HorizontalOptions="Center"/>
                             <StackLayout Spacing="7"
                                          HorizontalOptions="CenterAndExpand">
-                                <Label Text="{Binding Pressure, StringFormat='{0}hpa'}"
+                                <Label Text="{Binding PressureNow, StringFormat='{0}hpa'}"
                                        TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"
@@ -169,7 +170,7 @@
                                    HorizontalOptions="Center"/>
                             <StackLayout Spacing="7"
                                          HorizontalOptions="CenterAndExpand">
-                                <Label Text="{Binding Cloudiness, StringFormat='{0}%'}"
+                                <Label Text="{Binding CloudinessNow, StringFormat='{0}%'}"
                                        TextColor="White"
                                        FontSize="14"
                                        FontAttributes="Bold"
@@ -185,76 +186,72 @@
                 </StackLayout>
             </Grid>
         </Grid>
-
-  <Grid Grid.Row="1">
-     <Frame CornerRadius="15" >
-        <RefreshView Command="{Binding LoadItemsCommand}"
-                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-            <ListView ItemsSource="{Binding Week}" 
-                        SeparatorVisibility="Default"
-                        HasUnevenRows="True"
-                        Margin="0,0,0,0">
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                
-                                    <Frame CornerRadius="0" Margin="5" BackgroundColor="#4f97e3">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.ColumnSpan="4"
-                                                    Style="{StaticResource labelStyle}"
-                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
-                                            <Label Grid.Row="1"
-                                                    Style="{StaticResource labelStyle}"
-                                                    Grid.ColumnSpan="4"
-                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-                                            <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
-                                                   HeightRequest="25"
-                                                   Grid.Row="1"
-                                                   Grid.Column="4"
-                                                   Grid.ColumnSpan="3"
-                                                   HorizontalOptions="Center"/>
-                                            <Label Grid.Row="1"
-                                                    Style="{StaticResource labelStyle}"
-                                                    Grid.Column="8"
-                                                    Grid.ColumnSpan="2"
-                                                    Text="{Binding temp.max,StringFormat='{}{0:#}°'}"/>
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                                    Grid.ColumnSpan="9"
-                                                    NumberOfTapsRequired="1"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherDaysViewModel}}, Path=OnForecastHourly}"
-                                                    CommandParameter="{Binding .}">
-                                                </TapGestureRecognizer>
-                                            </Grid.GestureRecognizers>
-                                        </Grid>
-                                </Frame>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </RefreshView>
-    </Frame>
-
-            </Grid>
-        </Grid>
+        <Grid Grid.Row="1">
+            <Frame CornerRadius="15" >
+                <RefreshView Command="{Binding LoadItemsCommand}"
+                             IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Week}" 
+                                SeparatorVisibility="Default"
+                                HasUnevenRows="True"
+                                Margin="0,0,0,0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Frame CornerRadius="0" Margin="5" BackgroundColor="#4f97e3">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.ColumnSpan="4"
+                                                        Style="{StaticResource labelStyle}"
+                                                        Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
+                                                <Label Grid.Row="1"
+                                                        Style="{StaticResource labelStyle}"
+                                                        Grid.ColumnSpan="4"
+                                                        Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+                                                <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
+                                                        HeightRequest="25"
+                                                        Grid.Row="1"
+                                                        Grid.Column="4"
+                                                        Grid.ColumnSpan="3"
+                                                        HorizontalOptions="Center"/>
+                                                <Label Grid.Row="1"
+                                                        Style="{StaticResource labelStyle}"
+                                                        Grid.Column="8"
+                                                        Grid.ColumnSpan="2"
+                                                        Text="{Binding temp.max,StringFormat='{}{0:#}°'}"/>
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Grid.ColumnSpan="9"
+                                                        NumberOfTapsRequired="1"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherDaysViewModel}}, Path=OnForecastHourly}"
+                                                        CommandParameter="{Binding .}">
+                                                    </TapGestureRecognizer>
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </Frame>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </RefreshView>
+            </Frame>
+        </Grid>     
+    </Grid>
 </ContentPage>

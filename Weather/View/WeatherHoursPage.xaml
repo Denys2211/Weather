@@ -24,55 +24,55 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-        <ScrollView>
-            <ListView ItemsSource="{Binding Day}"
-                      SeparatorVisibility="Default"
-                      HasUnevenRows="True"
-                      Margin="0,0,0,0">
+    <ScrollView>
+        <ListView ItemsSource="{Binding Day}"
+                    SeparatorVisibility="Default"
+                    HasUnevenRows="True"
+                    Margin="0,0,0,0">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout>
-                                    <Frame>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.ColumnSpan="4"
-                                                   Style="{StaticResource labelStyle}"
-                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
-                                            <Label Grid.Row="1"
-                                                   Style="{StaticResource labelStyle}"
-                                                   Grid.ColumnSpan="4"
-                                                   Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:HH:mm}'}"/>
-                                            <Label Grid.Row="1"
-                                                   Style="{StaticResource labelStyle}"
-                                                   Grid.Column="8"
-                                                   Grid.ColumnSpan="2"
-                                                   Text="{Binding temp,StringFormat='{}{0:#}°'}"/>
-                                        </Grid>
-                                    </Frame>
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout>
+                                <Frame>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.ColumnSpan="4"
+                                                Style="{StaticResource labelStyle}"
+                                                Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
+                                        <Label Grid.Row="1"
+                                                Style="{StaticResource labelStyle}"
+                                                Grid.ColumnSpan="4"
+                                                Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:HH:mm}'}"/>
+                                        <Label Grid.Row="1"
+                                                Style="{StaticResource labelStyle}"
+                                                Grid.Column="8"
+                                                Grid.ColumnSpan="2"
+                                                Text="{Binding temp,StringFormat='{}{0:#}°'}"/>
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
 </ContentPage>

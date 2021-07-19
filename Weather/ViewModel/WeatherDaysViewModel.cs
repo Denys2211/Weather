@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Weather.Helper;
 using Weather.Models;
 using Weather.View;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Weather.ViewModel
@@ -12,23 +15,36 @@ namespace Weather.ViewModel
     {
         public ObservableCollection<Daily> Week { get; set; }
 
-        public float Humidity { get; set; }
+        public float HumidityNow { get; set; }
 
-        public float Wind { get; set; }
+        public float WindNow { get; set; }
 
-        public float Pressure { get; set; }
+        public float PressureNow { get; set; }
 
-        public float Cloudiness { get; set; }
+        public float CloudinessNow { get; set; }
+
+        public string DescriptionWeatherNow { get; set; }
 
         public string ImageWeatherSourceNow { get; set; }
 
-        public float Temp { get; set; }
+        public float TempNow { get; set; }
 
-        private string date;
-        public string Date
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        private string location;
+        public string Location
         {
-            get { return date; }
-            set { date = value; OnPropertyChanged("Date"); }
+            get { return location; }
+            set { location = value; OnPropertyChanged("Location"); }
+        }
+
+        private string date_today;
+        public string DateToday
+        {
+            get { return date_today; }
+            set { date_today = value; OnPropertyChanged("DateToday"); }
         }
 
         public Command LoadItemsCommand { get; set; }
@@ -37,7 +53,7 @@ namespace Weather.ViewModel
 
         public WeatherDaysViewModel()
         {
-            CityCoord = "lat=49.839683&lon=24.029717";
+            GetCoordinates();
             Week = new ObservableCollection<Daily>();
             LoadItemsCommand = new Command(GetForecastDays);
             OnForecastHourly = new Command<Daily>(ForecastHourly);
@@ -45,7 +61,7 @@ namespace Weather.ViewModel
         }
         private async void GetForecastDays()
         {
-            var url = $"https://api.openweathermap.org/data/2.5/onecall?{CityCoord}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
+            var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
             var result = await ApiCaller.Get(url);
 
             if (result.Successful)
@@ -57,20 +73,21 @@ namespace Weather.ViewModel
 
                     ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
+                    DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
+                    OnPropertyChanged("DescriptionWeatherNow");
                     ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
                     OnPropertyChanged("ImageWeatherSourceNow");
-                    Temp = ValueForecast.hourly[3].temp;
-                    OnPropertyChanged("Temp");
-                    Wind = ValueForecast.daily[0].wind_speed;
-                    OnPropertyChanged("Wind");
-                    Humidity = ValueForecast.daily[0].humidity;
-                    OnPropertyChanged("Humidity");
-                    Pressure = ValueForecast.daily[0].pressure;
-                    OnPropertyChanged("Pressure");
-                    Cloudiness = ValueForecast.daily[0].clouds;
-                    OnPropertyChanged("Cloudiness");
-                    var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(ValueForecast.daily[0].dt);
-                    Date = dt.ToString("dd.MM.yyyy");
+                    TempNow = ValueForecast.hourly[3].temp;
+                    OnPropertyChanged("TempNow");
+                    WindNow = ValueForecast.daily[0].wind_speed;
+                    OnPropertyChanged("WindNow");
+                    HumidityNow = ValueForecast.daily[0].humidity;
+                    OnPropertyChanged("HumidityNow");
+                    PressureNow = ValueForecast.daily[0].pressure;
+                    OnPropertyChanged("PressureNow");
+                    CloudinessNow = ValueForecast.daily[0].clouds;
+                    OnPropertyChanged("CloudinessNow");
+                    DateToday = DateTime.Now.ToString("dd.MM.yyyy");
                     for (int i = 0; i < 7; i++)
                     {
                         Week.Add(ValueForecast.daily[i]);
@@ -90,6 +107,36 @@ namespace Weather.ViewModel
                 await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
         }
+        private async void GetCoordinates()
+        {
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.Best);
+                var location = await Geolocation.GetLocationAsync(request);
+                if (location != null)
+                {
+                    Latitude = location.Latitude;
+                    Longitude = location.Longitude;
+
+                    Location = await GetCity(location);
+
+                }
+            }
+            catch(Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Coordinates Info", ex.Message, "OK");
+            }
+        }
+
+        private async Task<string> GetCity(Location location)
+        {
+            var places = await Geocoding.GetPlacemarksAsync(location);
+            var currentPlace = places?.FirstOrDefault();
+            if (currentPlace != null)
+                return $"{currentPlace.Locality}";
+            return null;
+        }
+
         private async void ForecastHourly(Daily daily)
         {
             for(int i = 0; i < 8; i++)
