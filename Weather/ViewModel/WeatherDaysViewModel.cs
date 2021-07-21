@@ -53,41 +53,25 @@ namespace Weather.ViewModel
 
         public WeatherDaysViewModel()
         {
-            GetCoordinates();
             Week = new ObservableCollection<Daily>();
-            LoadItemsCommand = new Command(GetForecastDays);
+            LoadItemsCommand = new Command(async () => await RefreshForecastAsync());
             OnForecastHourly = new Command<Daily>(ForecastHourly);
-            IsBusy = true;
+            _ = GetForecast();
         }
-        private async void GetForecastDays()
+        private async Task GetForecast()
         {
+            await GetCoordinates();
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
             var result = await ApiCaller.Get(url);
 
             if (result.Successful)
             {
-                IsBusy = true;
                 try
                 {
                     Week.Clear();
 
                     ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
-
-                    DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
-                    OnPropertyChanged("DescriptionWeatherNow");
-                    ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
-                    OnPropertyChanged("ImageWeatherSourceNow");
-                    TempNow = ValueForecast.hourly[3].temp;
-                    OnPropertyChanged("TempNow");
-                    WindNow = ValueForecast.daily[0].wind_speed;
-                    OnPropertyChanged("WindNow");
-                    HumidityNow = ValueForecast.daily[0].humidity;
-                    OnPropertyChanged("HumidityNow");
-                    PressureNow = ValueForecast.daily[0].pressure;
-                    OnPropertyChanged("PressureNow");
-                    CloudinessNow = ValueForecast.daily[0].clouds;
-                    OnPropertyChanged("CloudinessNow");
-                    DateToday = DateTime.Now.ToString("dd.MM.yyyy");
+                    GetForecastNow();
                     for (int i = 0; i < 7; i++)
                     {
                         Week.Add(ValueForecast.daily[i]);
@@ -97,17 +81,40 @@ namespace Weather.ViewModel
                 {
                     await Application.Current.MainPage.DisplayAlert("Weather Info", ex.Message, "OK");
                 }
-                finally
-                {
-                    IsBusy = false;
-                }
             }
             else
             {
                 await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
         }
-        private async void GetCoordinates()
+        private async Task RefreshForecastAsync()
+        {
+            IsBusy = true;
+            await GetForecast();
+            IsBusy = false;
+
+        }
+        private void GetForecastNow()
+        {
+
+            DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
+            OnPropertyChanged("DescriptionWeatherNow");
+            ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
+            OnPropertyChanged("ImageWeatherSourceNow");
+            TempNow = ValueForecast.hourly[3].temp;
+            OnPropertyChanged("TempNow");
+            WindNow = ValueForecast.daily[0].wind_speed;
+            OnPropertyChanged("WindNow");
+            HumidityNow = ValueForecast.daily[0].humidity;
+            OnPropertyChanged("HumidityNow");
+            PressureNow = ValueForecast.daily[0].pressure;
+            OnPropertyChanged("PressureNow");
+            CloudinessNow = ValueForecast.daily[0].clouds;
+            OnPropertyChanged("CloudinessNow");
+            DateToday = DateTime.Now.ToString("dd.MM.yyyy");
+
+        }
+        private async Task GetCoordinates()
         {
             try
             {
@@ -117,8 +124,11 @@ namespace Weather.ViewModel
                 {
                     Latitude = location.Latitude;
                     Longitude = location.Longitude;
-
                     Location = await GetCity(location);
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Weather Info", "No coordinates with GPS found", "OK");
 
                 }
             }

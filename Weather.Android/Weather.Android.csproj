@@ -85,10 +85,6 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\cloudiness.png">
-      <SubType></SubType>
-      <Generator></Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\drawable\gauge.png">
       <SubType></SubType>
       <Generator></Generator>
@@ -98,6 +94,10 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\wind.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\cloudiness.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
