@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Weather.Helper;
 using Weather.Models;
 using Weather.View;
 using Xamarin.Essentials;
@@ -13,6 +12,15 @@ namespace Weather.ViewModel
 {
     public class WeatherDaysViewModel : BaseViewModel
     {
+        public bool StatusGetCoordinates
+        {
+            get { return Preferences.Get(nameof(StatusGetCoordinates), false); }
+            set
+            {
+                Preferences.Set(nameof(StatusGetCoordinates), value);
+                OnPropertyChanged(nameof(StatusGetCoordinates));
+            }
+        }
         public ObservableCollection<Daily> Week { get; set; }
 
         public float HumidityNow { get; set; }
@@ -37,14 +45,14 @@ namespace Weather.ViewModel
         public string Location
         {
             get { return location; }
-            set { location = value; OnPropertyChanged("Location"); }
+            set { SetProperty(ref location, value); }
         }
 
         private string date_today;
         public string DateToday
         {
             get { return date_today; }
-            set { date_today = value; OnPropertyChanged("DateToday"); }
+            set { SetProperty(ref date_today, value); }
         }
 
         public Command LoadItemsCommand { get; set; }
@@ -60,9 +68,12 @@ namespace Weather.ViewModel
         }
         private async Task GetForecast()
         {
-            await GetCoordinates();
+
+            if(StatusGetCoordinates)
+                await GetCoordinates();
+
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
-            var result = await ApiCaller.Get(url);
+            var result = await DataStore.Get(url);
 
             if (result.Successful)
             {
@@ -98,19 +109,19 @@ namespace Weather.ViewModel
         {
 
             DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
-            OnPropertyChanged("DescriptionWeatherNow");
+            OnPropertyChanged(nameof(DescriptionWeatherNow));
             ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
-            OnPropertyChanged("ImageWeatherSourceNow");
+            OnPropertyChanged(nameof(ImageWeatherSourceNow));
             TempNow = ValueForecast.hourly[3].temp;
-            OnPropertyChanged("TempNow");
+            OnPropertyChanged(nameof(TempNow));
             WindNow = ValueForecast.daily[0].wind_speed;
-            OnPropertyChanged("WindNow");
+            OnPropertyChanged(nameof(WindNow));
             HumidityNow = ValueForecast.daily[0].humidity;
-            OnPropertyChanged("HumidityNow");
+            OnPropertyChanged(nameof(HumidityNow));
             PressureNow = ValueForecast.daily[0].pressure;
-            OnPropertyChanged("PressureNow");
+            OnPropertyChanged(nameof(PressureNow));
             CloudinessNow = ValueForecast.daily[0].clouds;
-            OnPropertyChanged("CloudinessNow");
+            OnPropertyChanged(nameof(CloudinessNow));
             DateToday = DateTime.Now.ToString("dd.MM.yyyy");
 
         }

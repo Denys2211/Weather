@@ -26,23 +26,41 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
-        <SwipeView >
+        <SwipeView BackgroundColor="WhiteSmoke">
             <SwipeView.LeftItems>
-                <SwipeItems>
+                <SwipeItems Mode="Reveal" SwipeBehaviorOnInvoked="RemainOpen">
                     <SwipeItemView>
-                        <Grid>
-                            <StackLayout Spacing="20"
-                                         Padding="35"
-                                         WidthRequest="250"
-                                         VerticalOptions="CenterAndExpand">
-                                <Label Text="Hello" TextColor="Black"/>
-                            </StackLayout>
-                        </Grid>
+                        <StackLayout Spacing="20"
+                                     WidthRequest="250"
+                                     VerticalOptions="StartAndExpand">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness"
+                                            iOS="0,35,0,0"/>
+                            </StackLayout.Margin>
+                            <pv:PancakeView CornerRadius="15" VerticalOptions="End"
+                                            BackgroundColor="#c7dfff"
+                                            Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="GPS" Padding="5"
+                                           HorizontalOptions="Start"
+                                           FontSize="Body"
+                                           TextColor="Black"/>
+                                    <Switch IsToggled="{Binding StatusGetCoordinates}"
+                                            Grid.Column="1"
+                                            HorizontalOptions="End"/>
+                                </Grid>
+                            </pv:PancakeView>
+
+                        </StackLayout>
                     </SwipeItemView>
                 </SwipeItems>
             </SwipeView.LeftItems>
-            <Grid>
-                <pv:PancakeView>
+            <Grid >
+                <pv:PancakeView CornerRadius="0">
                     <Grid BackgroundColor="#0fadd1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -70,7 +88,7 @@
                                                  HorizontalOptions="Center">
                                         <StackLayout VerticalOptions="Center">
                                             <Image  Source="{Binding ImageWeatherSourceNow, StringFormat='w{0}'}"
-                                                    Scale="2"
+                                                    Scale="2" 
                                                     WidthRequest="67"
                                                     HeightRequest="50"/>
                                             <Label  Text="{Binding DescriptionWeatherNow}"
@@ -93,27 +111,27 @@
                                     </StackLayout>
                                     <StackLayout>
                                         <StackLayout Orientation="Horizontal"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="0">
+                                                        HorizontalOptions="Center"
+                                                        Spacing="0">
                                             <Label Text="{Binding TempNow, StringFormat='{}{0:#}'}"
-                                                   TextColor="White"
-                                                   FontSize="130"
-                                                   HorizontalOptions="Center"/>
+                                                    TextColor="White"
+                                                    FontSize="130"
+                                                    HorizontalOptions="Center"/>
                                             <Label Text="°"
-                                                   TextColor="White"
-                                                   FontSize="130"
-                                                   HorizontalOptions="Center"/>
+                                                    TextColor="White"
+                                                    FontSize="130"
+                                                    HorizontalOptions="Center"/>
                                         </StackLayout>
                                         <Label Text="CELSIUS"
-                                               Margin="0,-30,0,0"
-                                               TextColor="White"
-                                               FontSize="13"
-                                               HorizontalOptions="Center"/>
+                                                Margin="0,-30,0,0"
+                                                TextColor="White"
+                                                FontSize="13"
+                                                HorizontalOptions="Center"/>
                                     </StackLayout>
                                     <Grid WidthRequest="320"
-                                          ColumnSpacing="10"
-                                          HorizontalOptions="CenterAndExpand"
-                                          VerticalOptions="CenterAndExpand">
+                                            ColumnSpacing="10"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
@@ -121,86 +139,86 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackLayout Orientation="Vertical"
-                                                     Spacing="10"
-                                                     HorizontalOptions="CenterAndExpand">
+                                                        Spacing="10"
+                                                        HorizontalOptions="CenterAndExpand">
                                             <Image Source="humidity.png"
-                                                   HeightRequest="25"
-                                                   HorizontalOptions="Center"/>
+                                                    HeightRequest="25"
+                                                    HorizontalOptions="Center"/>
                                             <StackLayout Spacing="7"
-                                                         HorizontalOptions="CenterAndExpand">
+                                                            HorizontalOptions="CenterAndExpand">
                                                 <Label Text="{Binding HumidityNow, StringFormat='{0}%'}"
-                                                       TextColor="White"
-                                                       FontSize="14"
-                                                       FontAttributes="Bold"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        FontSize="14"
+                                                        FontAttributes="Bold"
+                                                        HorizontalOptions="Center"/>
                                                 <Label Text="Humidity"
-                                                       TextColor="White"
-                                                       Margin="0,-5,0,0"
-                                                       FontSize="11"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        Margin="0,-5,0,0"
+                                                        FontSize="11"
+                                                        HorizontalOptions="Center"/>
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Grid.Column="1"
-                                                     Orientation="Vertical"
-                                                     Spacing="10"
-                                                     HorizontalOptions="CenterAndExpand">
+                                                        Orientation="Vertical"
+                                                        Spacing="10"
+                                                        HorizontalOptions="CenterAndExpand">
                                             <Image Source="wind.png"
-                                                   HeightRequest="25"
-                                                   HorizontalOptions="Center"/>
+                                                    HeightRequest="25"
+                                                    HorizontalOptions="Center"/>
                                             <StackLayout Spacing="7"
-                                                         HorizontalOptions="CenterAndExpand">
+                                                            HorizontalOptions="CenterAndExpand">
                                                 <Label Text="{Binding WindNow, StringFormat='{0}m/s'}"
-                                                       TextColor="White"
-                                                       FontSize="14"
-                                                       FontAttributes="Bold"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        FontSize="14"
+                                                        FontAttributes="Bold"
+                                                        HorizontalOptions="Center"/>
                                                 <Label Text="Wind"
-                                                       TextColor="White"
-                                                       Margin="0,-5,0,0"
-                                                       FontSize="11"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        Margin="0,-5,0,0"
+                                                        FontSize="11"
+                                                        HorizontalOptions="Center"/>
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Grid.Column="2"
-                                                     Orientation="Vertical"
-                                                     Spacing="10"
-                                                     HorizontalOptions="CenterAndExpand">
+                                                        Orientation="Vertical"
+                                                        Spacing="10"
+                                                        HorizontalOptions="CenterAndExpand">
                                             <Image Source="gauge.png"
-                                                   HeightRequest="25"
-                                                   HorizontalOptions="Center"/>
+                                                    HeightRequest="25"
+                                                    HorizontalOptions="Center"/>
                                             <StackLayout Spacing="7"
-                                                         HorizontalOptions="CenterAndExpand">
+                                                            HorizontalOptions="CenterAndExpand">
                                                 <Label Text="{Binding PressureNow, StringFormat='{0}hpa'}"
-                                                       TextColor="White"
-                                                       FontSize="14"
-                                                       FontAttributes="Bold"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        FontSize="14"
+                                                        FontAttributes="Bold"
+                                                        HorizontalOptions="Center"/>
                                                 <Label Text="Pressure"
-                                                       TextColor="White"
-                                                       Margin="0,-5,0,0"
-                                                       FontSize="11"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        Margin="0,-5,0,0"
+                                                        FontSize="11"
+                                                        HorizontalOptions="Center"/>
                                             </StackLayout>
                                         </StackLayout>
                                         <StackLayout Grid.Column="3"
-                                                     Orientation="Vertical"
-                                                     Spacing="10"
-                                                     HorizontalOptions="CenterAndExpand">
+                                                        Orientation="Vertical"
+                                                        Spacing="10"
+                                                        HorizontalOptions="CenterAndExpand">
                                             <Image Source="cloudiness.png"
-                                                   HeightRequest="25"
-                                                   HorizontalOptions="Center"/>
+                                                    HeightRequest="25"
+                                                    HorizontalOptions="Center"/>
                                             <StackLayout Spacing="7"
-                                                         HorizontalOptions="CenterAndExpand">
+                                                            HorizontalOptions="CenterAndExpand">
                                                 <Label Text="{Binding CloudinessNow, StringFormat='{0}%'}"
-                                                       TextColor="White"
-                                                       FontSize="14"
-                                                       FontAttributes="Bold"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        FontSize="14"
+                                                        FontAttributes="Bold"
+                                                        HorizontalOptions="Center"/>
                                                 <Label Text="Cloudiness"
-                                                       TextColor="White"
-                                                       Margin="0,-5,0,0"
-                                                       FontSize="11"
-                                                       HorizontalOptions="Center"/>
+                                                        TextColor="White"
+                                                        Margin="0,-5,0,0"
+                                                        FontSize="11"
+                                                        HorizontalOptions="Center"/>
                                             </StackLayout>
                                         </StackLayout>
                                     </Grid>
@@ -210,12 +228,12 @@
                         <Grid Grid.Row="1">
                             <Frame CornerRadius="20" Margin="0,0,0,-20" Padding="20,30,20,0">
                                 <RefreshView Command="{Binding LoadItemsCommand}"
-                                             IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                                                IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
                                     <ListView ItemsSource="{Binding Week}" 
                                                 SeparatorVisibility="None"
                                                 CompressedLayout.IsHeadless="False"
-                                                 IsGroupingEnabled="False"
-                                                 HasUnevenRows="True"
+                                                    IsGroupingEnabled="False"
+                                                    HasUnevenRows="True"
                                                 Margin="0,0,0,0">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>

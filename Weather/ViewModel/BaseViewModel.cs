@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Weather.Models;
+using Weather.Services;
+using Xamarin.Forms;
 
 namespace Weather.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public ApiCaller DataStore = DependencyService.Get<ApiCaller>();
         protected static ForecastInfo ValueForecast { get; set; }
         protected static int Hours { get; set; }
         bool isBusy = false;

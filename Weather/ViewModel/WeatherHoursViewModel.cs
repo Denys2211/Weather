@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Newtonsoft.Json;
-using Weather.Helper;
+﻿using System.Collections.ObjectModel;
 using Weather.Models;
 using Xamarin.Forms;
 

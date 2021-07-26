@@ -1,4 +1,5 @@
 ﻿using System;
+using Weather.Services;
 using Weather.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,7 +11,7 @@ namespace Weather
         public App()
         {
             InitializeComponent();
-
+            DependencyService.Register<ApiCaller>();
             MainPage = new NavigationPage(new WeatherDaysPage());
         }
 

@@ -2,11 +2,11 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Weather.Helper
+namespace Weather.Services
 {
     public class ApiCaller
     {
-        public static async Task<ApiResponse> Get(string url, string authId = null)
+        public async Task<ApiResponse> Get(string url, string authId = null)
         {
             using (var client = new HttpClient())
             {
