@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Weather.Models;
@@ -10,17 +9,8 @@ using Xamarin.Forms;
 
 namespace Weather.ViewModel
 {
-    public class WeatherDaysViewModel : BaseViewModel
+    public class WeatherDaysViewModel : WeatherPreferencesViewModel 
     {
-        public bool StatusGetCoordinates
-        {
-            get { return Preferences.Get(nameof(StatusGetCoordinates), false); }
-            set
-            {
-                Preferences.Set(nameof(StatusGetCoordinates), value);
-                OnPropertyChanged(nameof(StatusGetCoordinates));
-            }
-        }
         public ObservableCollection<Daily> Week { get; set; }
 
         public float HumidityNow { get; set; }
@@ -41,14 +31,14 @@ namespace Weather.ViewModel
 
         public double Longitude { get; set; }
 
-        private string location;
-        public string Location
+        string current_city;
+        public string Current_City
         {
-            get { return location; }
-            set { SetProperty(ref location, value); }
+            get { return current_city; }
+            set { SetProperty(ref current_city, value); }
         }
 
-        private string date_today;
+        string date_today;
         public string DateToday
         {
             get { return date_today; }
@@ -66,14 +56,13 @@ namespace Weather.ViewModel
             OnForecastHourly = new Command<Daily>(ForecastHourly);
             _ = GetForecast();
         }
-        private async Task GetForecast()
+        async Task GetForecast()
         {
-
-            if(StatusGetCoordinates)
+            if (StatusGetCoordinates)
                 await GetCoordinates();
 
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
-            var result = await DataStore.Get(url);
+            var result = await ApiWeather.Get(url);
 
             if (result.Successful)
             {
@@ -98,14 +87,24 @@ namespace Weather.ViewModel
                 await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
         }
-        private async Task RefreshForecastAsync()
+        async Task GetCoordinates()
+        {
+            Location location = await ApiGeocoding.GetLocationGPS();
+            if (location != null)
+            {
+                location.Latitude = Latitude;
+                location.Longitude = Longitude;
+                Current_City = await ApiGeocoding.GetCity(location);
+            }
+        }
+        async Task RefreshForecastAsync()
         {
             IsBusy = true;
             await GetForecast();
             IsBusy = false;
 
         }
-        private void GetForecastNow()
+        void GetForecastNow()
         {
 
             DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
@@ -125,40 +124,7 @@ namespace Weather.ViewModel
             DateToday = DateTime.Now.ToString("dd.MM.yyyy");
 
         }
-        private async Task GetCoordinates()
-        {
-            try
-            {
-                var request = new GeolocationRequest(GeolocationAccuracy.Best);
-                var location = await Geolocation.GetLocationAsync(request);
-                if (location != null)
-                {
-                    Latitude = location.Latitude;
-                    Longitude = location.Longitude;
-                    Location = await GetCity(location);
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Weather Info", "No coordinates with GPS found", "OK");
-
-                }
-            }
-            catch(Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Coordinates Info", ex.Message, "OK");
-            }
-        }
-
-        private async Task<string> GetCity(Location location)
-        {
-            var places = await Geocoding.GetPlacemarksAsync(location);
-            var currentPlace = places?.FirstOrDefault();
-            if (currentPlace != null)
-                return $"{currentPlace.Locality}";
-            return null;
-        }
-
-        private async void ForecastHourly(Daily daily)
+        async void ForecastHourly(Daily daily)
         {
             for(int i = 0; i < 8; i++)
             {

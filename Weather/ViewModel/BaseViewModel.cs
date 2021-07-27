@@ -10,7 +10,8 @@ namespace Weather.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public ApiCaller DataStore = DependencyService.Get<ApiCaller>();
+        public ApiCallerWeather ApiWeather = DependencyService.Get<ApiCallerWeather>();
+        public ApiCallerGeocoding ApiGeocoding = DependencyService.Get<ApiCallerGeocoding>();
         protected static ForecastInfo ValueForecast { get; set; }
         protected static int Hours { get; set; }
         bool isBusy = false;

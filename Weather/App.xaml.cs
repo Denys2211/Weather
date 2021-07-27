@@ -11,7 +11,8 @@ namespace Weather
         public App()
         {
             InitializeComponent();
-            DependencyService.Register<ApiCaller>();
+            DependencyService.Register<ApiCallerGeocoding>();
+            DependencyService.Register<ApiCallerWeather>();
             MainPage = new NavigationPage(new WeatherDaysPage());
         }
 

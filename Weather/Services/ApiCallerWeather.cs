@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Weather.Services
 {
-    public class ApiCaller
+    public class ApiCallerWeather
     {
         public async Task<ApiResponse> Get(string url, string authId = null)
         {
