@@ -12,7 +12,7 @@ namespace Weather.ViewModel
     public class WeatherDaysViewModel : WeatherPreferencesViewModel 
     {
         public ObservableCollection<Daily> Week { get; set; }
-
+        
         public float HumidityNow { get; set; }
 
         public float WindNow { get; set; }
@@ -30,14 +30,7 @@ namespace Weather.ViewModel
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
-
-        string current_city;
-        public string Current_City
-        {
-            get { return current_city; }
-            set { SetProperty(ref current_city, value); }
-        }
-
+        
         string date_today;
         public string DateToday
         {
@@ -60,6 +53,12 @@ namespace Weather.ViewModel
         {
             if (StatusGetCoordinates)
                 await GetCoordinates();
+            else if(ListCity.Count != 0)
+            {
+                Latitude = ListCity[Index_City].coord.lat; 
+                Longitude = ListCity[Index_City].coord.lon;
+                Current_City = ListCity[Index_City].name;
+            }
 
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
             var result = await ApiWeather.Get(url);
@@ -92,8 +91,8 @@ namespace Weather.ViewModel
             Location location = await ApiGeocoding.GetLocationGPS();
             if (location != null)
             {
-                location.Latitude = Latitude;
-                location.Longitude = Longitude;
+                Latitude = location.Latitude;
+                Longitude = location.Longitude;
                 Current_City = await ApiGeocoding.GetCity(location);
             }
         }

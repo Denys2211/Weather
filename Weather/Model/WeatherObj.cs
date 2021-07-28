@@ -116,6 +116,8 @@ namespace Weather.Models
         public int timezone { get; set; }
         public int sunrise { get; set; }
         public int sunset { get; set; }
+        public bool iscolor { get; set; }
+
     }
 
     public class Main

@@ -33,21 +33,19 @@ namespace Weather.Services
             return null;
         }
 
-        internal async Task GetCoordinatesFromCityName(string address)
+        internal async Task<Location> GetCoordinatesFromCityName(string address)
         {
             try
             {
                 var locations = await Geocoding.GetLocationsAsync(address);
 
                 var location = locations?.FirstOrDefault();
-                if (location != null)
-                {
-                    Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-                }
+                return location;
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Coordinates Info", ex.Message, "OK");
+                return null;
             }
         }
     }

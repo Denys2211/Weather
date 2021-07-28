@@ -31,13 +31,18 @@
                 <SwipeItems Mode="Reveal" 
                             SwipeBehaviorOnInvoked="RemainOpen">
                     <SwipeItemView>
-                        <StackLayout Spacing="20"
-                                     WidthRequest="250"
-                                     VerticalOptions="Fill">
-                            <StackLayout.Margin>
+                        <Grid WidthRequest="250"
+                              VerticalOptions="Fill">
+                            <Grid.Margin>
                                 <OnPlatform x:TypeArguments="Thickness"
                                             iOS="0,35,0,0"/>
-                            </StackLayout.Margin>
+                            </Grid.Margin>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
                             <pv:PancakeView CornerRadius="15" VerticalOptions="End"
                                             BackgroundColor="#c7dfff"
                                             Margin="5">
@@ -55,7 +60,75 @@
                                             HorizontalOptions="End"/>
                                 </Grid>
                             </pv:PancakeView>
-                        </StackLayout>
+                            <StackLayout Grid.Row="1" Grid.RowSpan="2">
+                                <Grid Margin="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Entry Grid.ColumnSpan="4"
+                                           Placeholder="City"
+                                           ClearButtonVisibility="WhileEditing"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalTextAlignment="Center"
+                                           BackgroundColor="#c7dfff"
+                                           Text="{Binding Current_City}"
+                                           TextColor="Black"/>
+                                    <Button Grid.Column="4"
+                                            BackgroundColor="SteelBlue"
+                                            Text="✔"
+                                            TextColor="Black"
+                                            Command="{Binding SaveCommand}"/>
+                                </Grid>
+                                <Frame CornerRadius="15" Margin="10">
+                                    <ListView ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=ListCity}" 
+                                              SeparatorVisibility="Default"
+                                              CompressedLayout.IsHeadless="False"
+                                              IsGroupingEnabled="False"
+                                              HasUnevenRows="True"
+                                              Margin="0,0,0,0">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <ViewCell.View>
+                                                        <StackLayout>
+                                                            <Frame CornerRadius="15" Margin="5">
+                                                                <Frame.Triggers>
+                                                                    <DataTrigger TargetType="Frame"
+                                                                                 Binding="{Binding iscolor}"
+                                                                                 Value="True">
+                                                                        <Setter Property ="BackgroundColor" Value ="Yellow"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger TargetType="Frame"
+                                                                                 Binding="{Binding iscolor}"
+                                                                                 Value="False">
+                                                                        <Setter Property ="BackgroundColor" Value ="White"/>
+
+                                                                    </DataTrigger>
+                                                                </Frame.Triggers>
+                                                                <Frame.GestureRecognizers>
+                                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=ChoiceCity}"
+                                                                                          CommandParameter="{Binding .}"/>
+                                                                </Frame.GestureRecognizers>
+                                                                <Label HorizontalOptions="Center"
+                                                                       VerticalOptions="Center"
+                                                                       Text="{Binding name}"
+                                                                       TextColor="Black"/>
+                                                            </Frame>
+                                                        </StackLayout>
+                                                    </ViewCell.View>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Frame>
+                            </StackLayout>
+                        </Grid>
                     </SwipeItemView>
                 </SwipeItems>
             </SwipeView.LeftItems>
