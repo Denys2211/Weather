@@ -36,6 +36,7 @@
 <AndroidUseAapt2>true</AndroidUseAapt2>
 <AndroidUseAapt2>true</AndroidUseAapt2>
 <AndroidSupportedAbis>armeabi-v7a;arm64-v8a;x86;x86_64</AndroidSupportedAbis>
+<AndroidDexTool>d8</AndroidDexTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
