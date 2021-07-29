@@ -2,9 +2,8 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace Weather.ViewModel
+namespace Weather.Converters
 {
-    
     public class LongToDateTimeConverter : IValueConverter
     {
         DateTime _time = new DateTime(1970, 1, 1, 0, 0, 0, 0);

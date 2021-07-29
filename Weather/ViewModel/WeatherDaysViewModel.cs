@@ -55,9 +55,9 @@ namespace Weather.ViewModel
                 await GetCoordinates();
             else if(ListCity.Count != 0)
             {
-                Latitude = ListCity[Index_City].coord.lat; 
-                Longitude = ListCity[Index_City].coord.lon;
-                Current_City = ListCity[Index_City].name;
+                Latitude = ListCity[Index_City].Lat; 
+                Longitude = ListCity[Index_City].Lon;
+                Current_City = ListCity[Index_City].Name;
             }
 
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
@@ -107,19 +107,19 @@ namespace Weather.ViewModel
         {
 
             DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
-            OnPropertyChanged(nameof(DescriptionWeatherNow));
+            RaisePropertyChanged(nameof(DescriptionWeatherNow));
             ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
-            OnPropertyChanged(nameof(ImageWeatherSourceNow));
+            RaisePropertyChanged(nameof(ImageWeatherSourceNow));
             TempNow = ValueForecast.hourly[3].temp;
-            OnPropertyChanged(nameof(TempNow));
+            RaisePropertyChanged(nameof(TempNow));
             WindNow = ValueForecast.daily[0].wind_speed;
-            OnPropertyChanged(nameof(WindNow));
+            RaisePropertyChanged(nameof(WindNow));
             HumidityNow = ValueForecast.daily[0].humidity;
-            OnPropertyChanged(nameof(HumidityNow));
+            RaisePropertyChanged(nameof(HumidityNow));
             PressureNow = ValueForecast.daily[0].pressure;
-            OnPropertyChanged(nameof(PressureNow));
+            RaisePropertyChanged(nameof(PressureNow));
             CloudinessNow = ValueForecast.daily[0].clouds;
-            OnPropertyChanged(nameof(CloudinessNow));
+            RaisePropertyChanged(nameof(CloudinessNow));
             DateToday = DateTime.Now.ToString("dd.MM.yyyy");
 
         }

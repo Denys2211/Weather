@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Weather.ViewModel"
+             xmlns:converters="clr-namespace:Weather.Converters"
              mc:Ignorable="d"
              x:Class="Weather.View.WeatherHoursPage">
     
@@ -20,7 +21,7 @@
                 <Setter Property="TextColor" 
                         Value="Black" />
             </Style>
-            <local:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
+            <converters:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:local="clr-namespace:Weather.ViewModel"
+             xmlns:converters="clr-namespace:Weather.Converters"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
              x:Class="Weather.View.WeatherDaysPage">
@@ -22,7 +23,8 @@
                 <Setter Property="TextColor" 
                         Value="White" />
             </Style>
-            <local:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
+            <converters:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
+            <converters:SelectedCategoryConverter x:Key="SelectedCategoryConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
@@ -77,7 +79,7 @@
                                            VerticalTextAlignment="Center"
                                            HorizontalTextAlignment="Center"
                                            BackgroundColor="#c7dfff"
-                                           Text="{Binding Current_City}"
+                                           Text="{Binding Entry_City}"
                                            TextColor="Black"/>
                                     <Button Grid.Column="4"
                                             BackgroundColor="SteelBlue"
@@ -97,28 +99,17 @@
                                                 <ViewCell>
                                                     <ViewCell.View>
                                                         <StackLayout>
-                                                            <Frame CornerRadius="15" Margin="5">
-                                                                <Frame.Triggers>
-                                                                    <DataTrigger TargetType="Frame"
-                                                                                 Binding="{Binding iscolor}"
-                                                                                 Value="True">
-                                                                        <Setter Property ="BackgroundColor" Value ="Yellow"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger TargetType="Frame"
-                                                                                 Binding="{Binding iscolor}"
-                                                                                 Value="False">
-                                                                        <Setter Property ="BackgroundColor" Value ="White"/>
-
-                                                                    </DataTrigger>
-                                                                </Frame.Triggers>
+                                                            <Frame CornerRadius="15"
+                                                                    Margin="5"
+                                                                    BackgroundColor="{Binding IsSelected, Converter={StaticResource SelectedCategoryConverter}}">
                                                                 <Frame.GestureRecognizers>
                                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=ChoiceCity}"
-                                                                                          CommandParameter="{Binding .}"/>
+                                                                                            CommandParameter="{Binding .}"/>
                                                                 </Frame.GestureRecognizers>
                                                                 <Label HorizontalOptions="Center"
-                                                                       VerticalOptions="Center"
-                                                                       Text="{Binding name}"
-                                                                       TextColor="Black"/>
+                                                                        VerticalOptions="Center"
+                                                                        Text="{Binding Name}"
+                                                                        TextColor="Black"/>
                                                             </Frame>
                                                         </StackLayout>
                                                     </ViewCell.View>
@@ -300,77 +291,72 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <Frame CornerRadius="20"
-                                   Margin="0,0,0,-20"
-                                   Padding="20,30,20,0">
+                                   Margin="0,8,0,-20"
+                                   Padding="20,20,20,35">
                                 <RefreshView Command="{Binding LoadItemsCommand}"
                                                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-                                    <ListView ItemsSource="{Binding Week}" 
-                                                SeparatorVisibility="None"
+                                    <CollectionView ItemsSource="{Binding Week}"
                                                 CompressedLayout.IsHeadless="False"
-                                                IsGroupingEnabled="False"
-                                                HasUnevenRows="True"
                                                 Margin="0,0,0,0">
-                                        <ListView.ItemTemplate>
+                                        <CollectionView.ItemTemplate>
                                             <DataTemplate>
-                                                <ViewCell>
-                                                    <ViewCell.View>
-                                                        <Frame CornerRadius="0"
-                                                               Margin="0,0,0,20"
-                                                               BackgroundColor="#4f97e3"
-                                                               HasShadow="False">
-                                                            <Grid>
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="*"/>
-                                                                    <RowDefinition Height="*"/>
-                                                                </Grid.RowDefinitions>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <Label Grid.ColumnSpan="4"
-                                                                        Style="{StaticResource labelStyle}"
-                                                                        Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
-                                                                <Label Grid.Row="1"
-                                                                        Style="{StaticResource labelStyle}"
-                                                                        Grid.ColumnSpan="4"
-                                                                        Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-                                                                <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
-                                                                        HeightRequest="45"
-                                                                        Scale="1"
-                                                                        Grid.RowSpan="2"
-                                                                        Grid.Row="0"
-                                                                        Grid.Column="4"
-                                                                        Grid.ColumnSpan="3"
-                                                                        HorizontalOptions="Center"/>
-                                                                <Label Grid.Row="1"
-                                                                        Style="{StaticResource labelStyle}"
-                                                                        Grid.Column="8"
-                                                                        Grid.ColumnSpan="2"
-                                                                        Text="{Binding temp.max,StringFormat='{}{0:#}°'}"/>
-                                                                <Grid.GestureRecognizers>
-                                                                    <TapGestureRecognizer
-                                                                        Grid.ColumnSpan="9"
-                                                                        NumberOfTapsRequired="1"
-                                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherDaysViewModel}}, Path=OnForecastHourly}"
-                                                                        CommandParameter="{Binding .}">
-                                                                    </TapGestureRecognizer>
-                                                                </Grid.GestureRecognizers>
-                                                            </Grid>
-                                                        </Frame>
-                                                    </ViewCell.View>
-                                                </ViewCell>
+                                                <StackLayout>
+                                                    <Frame CornerRadius="10"
+                                                            Margin="0,10,0,0"
+                                                            BackgroundColor="#4f97e3"
+                                                            HasShadow="False">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Label Grid.ColumnSpan="4"
+                                                                    Style="{StaticResource labelStyle}"
+                                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
+                                                            <Label Grid.Row="1"
+                                                                    Style="{StaticResource labelStyle}"
+                                                                    Grid.ColumnSpan="4"
+                                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+                                                            <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
+                                                                    HeightRequest="45"
+                                                                    Scale="1"
+                                                                    Grid.RowSpan="2"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="4"
+                                                                    Grid.ColumnSpan="3"
+                                                                    HorizontalOptions="Center"/>
+                                                            <Label Grid.Row="1"
+                                                                    Style="{StaticResource labelStyle}"
+                                                                    Grid.Column="8"
+                                                                    Grid.ColumnSpan="2"
+                                                                    Text="{Binding temp.max,StringFormat='{}{0:#}°'}"/>
+                                                            <Grid.GestureRecognizers>
+                                                                <TapGestureRecognizer
+                                                                    Grid.ColumnSpan="9"
+                                                                    NumberOfTapsRequired="1"
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherDaysViewModel}}, Path=OnForecastHourly}"
+                                                                    CommandParameter="{Binding .}">
+                                                                </TapGestureRecognizer>
+                                                            </Grid.GestureRecognizers>
+                                                        </Grid>
+                                                    </Frame>
+                                                </StackLayout>
                                             </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
                                 </RefreshView>
                             </Frame>
                         </Grid>     

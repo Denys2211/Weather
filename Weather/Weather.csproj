@@ -15,11 +15,13 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+    <PackageReference Include="Prism.Forms" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
     <Folder Include="View\" />
     <Folder Include="Services\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
 </Project>

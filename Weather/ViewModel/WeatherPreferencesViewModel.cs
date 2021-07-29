@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Weather.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -8,19 +7,9 @@ namespace Weather.ViewModel
 {
     public class WeatherPreferencesViewModel : BaseViewModel
     {
-        bool _colorCurrentCity;
-        public bool ColorCurrentCity
-        {
-            get { return Preferences.Get(nameof(ColorCurrentCity), false); }
-            set
-            {
-                SetProperty(ref _colorCurrentCity, value);
-                Preferences.Set(nameof(ColorCurrentCity), value);
-            }
-        }
         public Command ChoiceCity { get; set; }
         public Command SaveCommand { get; set; }
-        public ObservableCollection<City> ListCity { get; set; }
+        public ObservableCollection<CustomerLocation> ListCity { get; set; }
         const string CITY_LIST_PROP_NAME = "cities";
         int index_city;
         public int Index_City
@@ -32,6 +21,12 @@ namespace Weather.ViewModel
                 Preferences.Set(nameof(Index_City), value);
             }
         }
+        string entry_city;
+        public string Entry_City
+        {
+            get { return entry_city; }
+            set { SetProperty(ref entry_city, value); }
+        }
         string current_city;
         public string Current_City
         {
@@ -40,14 +35,11 @@ namespace Weather.ViewModel
         }
         public WeatherPreferencesViewModel ()
         {
-            ChoiceCity = new Command<City>(ActiveCity);
+            ChoiceCity = new Command<CustomerLocation>(ActiveCity);
             SaveCommand = new Command(Save);
-            ListCity = new ObservableCollection<City>();
-            if (Application.Current.Properties.ContainsKey(CITY_LIST_PROP_NAME))
-            {
-                var list = Application.Current.Properties[CITY_LIST_PROP_NAME].ToString();
-                Deserialize(list);
-            }
+            ListCity = new ObservableCollection<CustomerLocation>();
+            ReadPropertiesApp();
+
         }
         public bool StatusGetCoordinates
         { 
@@ -55,7 +47,7 @@ namespace Weather.ViewModel
             set
             {
                 Preferences.Set(nameof(StatusGetCoordinates), value);
-                OnPropertyChanged(nameof(StatusGetCoordinates));
+                RaisePropertyChanged(nameof(StatusGetCoordinates));
             }
         }
         internal string Serialize()
@@ -65,40 +57,57 @@ namespace Weather.ViewModel
 
         internal void Deserialize(string list)
         {
-            ListCity = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<City>>(list);
+            ListCity = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<CustomerLocation>>(list);
             
         }
-        void ActiveCity(City city)
+        void ReadPropertiesApp()
         {
-            Index_City = ListCity.Count - city.id - 1;
-            Current_City = ListCity[Index_City].name;
+            if (Application.Current.Properties.ContainsKey(CITY_LIST_PROP_NAME))
+            {
+                var list = Application.Current.Properties[CITY_LIST_PROP_NAME].ToString();
+                Deserialize(list);
+            }
+        }
+        void SaveToPropertiesApp()
+        {
+            var list = Serialize();
+            Application.Current.Properties[CITY_LIST_PROP_NAME] = list;
+        }
+        void ActiveCity(CustomerLocation city)
+        {
+            Index_City = ListCity.Count - city.Id - 1;
+            foreach(var item in ListCity)
+            {
+                item.IsSelected = false;
+            }
+            Current_City = ListCity[Index_City].Name;
+            ListCity[Index_City].IsSelected = true;
+            SaveToPropertiesApp();
         }
         private async void Save()
         {
             foreach (var item in ListCity)
             {
-                if (Current_City == item.name)
+                if (Entry_City == item.Name)
                 {
                     await Application.Current.MainPage.DisplayAlert("Notification", "City is Exist", "Ok");
                     return;
                 }
             }
-            var location = await ApiGeocoding.GetCoordinatesFromCityName(Current_City);
+            
+            var location = await ApiGeocoding.GetCoordinatesFromCityName(Entry_City);
             if(location != null)
             {
-                ListCity.Insert(0, new City
+                ListCity.Insert(0, new CustomerLocation
                 {
-                    id = ListCity.Count,
-                    name = Current_City,
-                    iscolor = false,
-                    coord = new Coord
-                    {
-                        lat = Convert.ToSingle(location.Latitude),
-                        lon = Convert.ToSingle(location.Longitude)
-                    }
+                    Id = ListCity.Count,
+                    Name = Entry_City,
+                    IsSelected = false,
+                    Lat = location.Latitude,
+                    Lon = location.Longitude
                 });
-                var list = Serialize();
-                Application.Current.Properties[CITY_LIST_PROP_NAME] = list;
+                SaveToPropertiesApp();
+                Entry_City = null;
             }
             else
             {
