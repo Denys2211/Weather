@@ -1,11 +1,14 @@
-﻿using Prism.Mvvm;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Weather.Models;
 using Weather.Services;
 using Xamarin.Forms;
 
 namespace Weather.ViewModel
 {
-    public class BaseViewModel : BindableBase
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         public ApiCallerWeather ApiWeather = DependencyService.Get<ApiCallerWeather>();
         public ApiCallerGeocoding ApiGeocoding = DependencyService.Get<ApiCallerGeocoding>();
@@ -17,13 +20,28 @@ namespace Weather.ViewModel
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
         }
-        private string _title;
-        public string Title
+        protected virtual bool SetProperty<T>(ref T backingStore, T value,
+           [CallerMemberName] string propertyName = "",
+           Action onChanged = null)
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
+
+            backingStore = value;
+            onChanged?.Invoke();
+            RaisePropertyChanged(propertyName);
+            return true;
+        }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         }
-        
+        #endregion
+
     }
 }

@@ -99,28 +99,42 @@ namespace Weather.ViewModel
         async Task RefreshForecastAsync()
         {
             IsBusy = true;
-            await GetForecast();
-            IsBusy = false;
+            try
+            {
+                await GetForecast();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
 
         }
-        void GetForecastNow()
+        async void GetForecastNow()
         {
+            try
+            {
+                DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
+                RaisePropertyChanged(nameof(DescriptionWeatherNow));
+                ImageWeatherSourceNow = ValueForecast.hourly[3].weather[0].icon;
+                RaisePropertyChanged(nameof(ImageWeatherSourceNow));
+                TempNow = ValueForecast.hourly[3].temp;
+                RaisePropertyChanged(nameof(TempNow));
+                WindNow = ValueForecast.daily[0].wind_speed;
+                RaisePropertyChanged(nameof(WindNow));
+                HumidityNow = ValueForecast.daily[0].humidity;
+                RaisePropertyChanged(nameof(HumidityNow));
+                PressureNow = ValueForecast.daily[0].pressure;
+                RaisePropertyChanged(nameof(PressureNow));
+                CloudinessNow = ValueForecast.daily[0].clouds;
+                RaisePropertyChanged(nameof(CloudinessNow));
+                DateToday = DateTime.Now.ToString();
+            }
+            catch(Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Notification", ex.Message, "OK");
 
-            DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
-            RaisePropertyChanged(nameof(DescriptionWeatherNow));
-            ImageWeatherSourceNow = ValueForecast.daily[0].weather[0].icon;
-            RaisePropertyChanged(nameof(ImageWeatherSourceNow));
-            TempNow = ValueForecast.hourly[3].temp;
-            RaisePropertyChanged(nameof(TempNow));
-            WindNow = ValueForecast.daily[0].wind_speed;
-            RaisePropertyChanged(nameof(WindNow));
-            HumidityNow = ValueForecast.daily[0].humidity;
-            RaisePropertyChanged(nameof(HumidityNow));
-            PressureNow = ValueForecast.daily[0].pressure;
-            RaisePropertyChanged(nameof(PressureNow));
-            CloudinessNow = ValueForecast.daily[0].clouds;
-            RaisePropertyChanged(nameof(CloudinessNow));
-            DateToday = DateTime.Now.ToString("dd.MM.yyyy");
+            }
+
 
         }
         async void ForecastHourly(Daily daily)

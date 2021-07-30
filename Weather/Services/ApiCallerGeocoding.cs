@@ -26,11 +26,20 @@ namespace Weather.Services
 
         internal async Task<string> GetCity(Location location)
         {
-            var places = await Geocoding.GetPlacemarksAsync(location);
-            var currentPlace = places?.FirstOrDefault();
-            if (currentPlace != null)
-                return $"{currentPlace.Locality}";
-            return null;
+            try
+            {
+                var places = await Geocoding.GetPlacemarksAsync(location);
+                var currentPlace = places?.FirstOrDefault();
+                if (currentPlace != null)
+                    return $"{currentPlace.Locality}";
+                return null;
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Coordinates Info", ex.Message, "OK");
+                return null;
+            }
+
         }
 
         internal async Task<Location> GetCoordinatesFromCityName(string address)

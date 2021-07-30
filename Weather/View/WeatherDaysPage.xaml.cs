@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Weather.Services;
-using Weather.Models;
-using Weather.ViewModel;
 using Xamarin.Forms;
 using System.ComponentModel;
 
@@ -15,6 +10,10 @@ namespace Weather.View
         public WeatherDaysPage()
         {
             InitializeComponent();
+        }
+        public void OpenSwipe(object sender, EventArgs e)
+        {
+            MainSwipeView.Open(OpenSwipeItem.LeftItems);
         }
     }
 }

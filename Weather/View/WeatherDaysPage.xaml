@@ -26,7 +26,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
-        <SwipeView BackgroundColor="WhiteSmoke">
+        <SwipeView x:Name="MainSwipeView" BackgroundColor="WhiteSmoke">
             <SwipeView.LeftItems>
                 <SwipeItems Mode="Reveal" 
                             SwipeBehaviorOnInvoked="RemainOpen">
@@ -116,7 +116,11 @@
                                                                 </Frame.Triggers>
                                                                 <Frame.GestureRecognizers>
                                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=ChoiceCity}"
-                                                                                            CommandParameter="{Binding .}"/>
+                                                                                          CommandParameter="{Binding .}"
+                                                                                          NumberOfTapsRequired="1"/>
+                                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=Delete}"
+                                                                                          CommandParameter="{Binding .}"
+                                                                                          NumberOfTapsRequired="2"/>
                                                                 </Frame.GestureRecognizers>
                                                                 <Label HorizontalOptions="Center"
                                                                         VerticalOptions="Center"
@@ -153,6 +157,7 @@
                             </Grid.Margin>
                             <ImageButton Source="Menu"
                                          Margin="20"
+                                         Clicked="OpenSwipe"
                                          WidthRequest="23"
                                          HeightRequest="25"
                                          HorizontalOptions="Start"

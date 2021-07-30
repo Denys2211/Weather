@@ -10,6 +10,7 @@ namespace Weather.ViewModel
         public Command ChoiceCity { get; set; }
         public Command SaveCommand { get; set; }
         public ObservableCollection<CustomerLocation> ListCity { get; set; }
+        public Command Delete { get; set; }
         const string CITY_LIST_PROP_NAME = "cities";
         int index_city;
         public int Index_City
@@ -35,6 +36,7 @@ namespace Weather.ViewModel
         }
         public WeatherPreferencesViewModel ()
         {
+            Delete = new Command<CustomerLocation>(DeleteCity);
             ChoiceCity = new Command<CustomerLocation>(ActiveCity);
             SaveCommand = new Command(Save);
             ListCity = new ObservableCollection<CustomerLocation>();
@@ -114,7 +116,19 @@ namespace Weather.ViewModel
                 await Application.Current.MainPage.DisplayAlert("Coordinates Info", "No coordinates received.Please try again", "OK");
 
             }
+        }
+        private async void DeleteCity(CustomerLocation city)
+        {
+            if (city == null)
+            {
+                return;
+            }
 
+            bool result = await Application.Current.MainPage.DisplayAlert($"{city.Name}", $"Do you want to delete an element?", "Yes", "No");
+            if (result)
+            {
+                ListCity.Remove(city);
+            }
         }
     }
     
