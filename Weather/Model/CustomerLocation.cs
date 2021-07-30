@@ -6,7 +6,6 @@ namespace Weather.Models
     {
         public double Lon { get; set; }
         public double Lat { get; set; }
-        public int Id { get; set; }
         public string Name { get; set; }
         private bool _isSelected;
 

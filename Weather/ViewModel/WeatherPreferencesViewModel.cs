@@ -77,7 +77,7 @@ namespace Weather.ViewModel
         }
         void ActiveCity(CustomerLocation city)
         {
-            Index_City = ListCity.Count - city.Id - 1;
+            Index_City = ListCity.IndexOf(city);
             foreach(var item in ListCity)
             {
                 item.IsSelected = false;
@@ -102,7 +102,6 @@ namespace Weather.ViewModel
             {
                 ListCity.Insert(0, new CustomerLocation
                 {
-                    Id = ListCity.Count,
                     Name = Entry_City,
                     IsSelected = false,
                     Lat = location.Latitude,
@@ -128,6 +127,7 @@ namespace Weather.ViewModel
             if (result)
             {
                 ListCity.Remove(city);
+                SaveToPropertiesApp();
             }
         }
     }
