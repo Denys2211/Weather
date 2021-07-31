@@ -312,7 +312,7 @@
                                    Padding="20,20,20,35">
                                 <RefreshView Command="{Binding LoadItemsCommand}"
                                                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-                                    <CollectionView ItemsSource="{Binding Week}"
+                                    <CollectionView ItemsSource="{Binding Days}"
                                                 CompressedLayout.IsHeadless="False"
                                                 Margin="0,0,0,0">
                                         <CollectionView.ItemTemplate>

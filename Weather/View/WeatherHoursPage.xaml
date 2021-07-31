@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Weather.ViewModel"
              xmlns:converters="clr-namespace:Weather.Converters"
              mc:Ignorable="d"
+             Title="Hourly"
              x:Class="Weather.View.WeatherHoursPage">
     
     <ContentPage.BindingContext>
@@ -19,7 +20,7 @@
                 <Setter Property="FontSize" 
                         Value="Small" />
                 <Setter Property="TextColor" 
-                        Value="Black" />
+                        Value="White" />
             </Style>
             <converters:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
         </ResourceDictionary>
@@ -36,7 +37,7 @@
                     <ViewCell>
                         <ViewCell.View>
                             <StackLayout>
-                                <Frame>
+                                <Frame BackgroundColor="#4f97e3">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*"/>
@@ -62,6 +63,14 @@
                                                 Style="{StaticResource labelStyle}"
                                                 Grid.ColumnSpan="4"
                                                 Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:HH:mm}'}"/>
+                                        <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
+                                                HeightRequest="45"
+                                                Scale="1"
+                                                Grid.RowSpan="2"
+                                                Grid.Row="0"
+                                                Grid.Column="4"
+                                                Grid.ColumnSpan="3"
+                                                HorizontalOptions="Center"/>
                                         <Label Grid.Row="1"
                                                 Style="{StaticResource labelStyle}"
                                                 Grid.Column="8"

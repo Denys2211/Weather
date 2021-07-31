@@ -11,7 +11,7 @@ namespace Weather.ViewModel
 {
     public class WeatherDaysViewModel : WeatherPreferencesViewModel 
     {
-        public ObservableCollection<Daily> Week { get; set; }
+        public ObservableCollection<Daily> Days { get; set; }
         
         public float HumidityNow { get; set; }
 
@@ -44,7 +44,7 @@ namespace Weather.ViewModel
 
         public WeatherDaysViewModel()
         {
-            Week = new ObservableCollection<Daily>();
+            Days = new ObservableCollection<Daily>();
             LoadItemsCommand = new Command(async () => await RefreshForecastAsync());
             OnForecastHourly = new Command<Daily>(ForecastHourly);
             _ = GetForecast();
@@ -52,7 +52,16 @@ namespace Weather.ViewModel
         async Task GetForecast()
         {
             if (StatusGetCoordinates)
+            {
                 await GetCoordinates();
+                
+                if (!CheckExistCityInList(Current_City))
+                {
+                    Entry_City = Current_City;
+                    await Save(Entry_City);
+                    ActiveCity(ListCity[0]);
+                }
+            }
             else if(ListCity.Count != 0)
             {
                 Latitude = ListCity[Index_City].Lat; 
@@ -67,19 +76,21 @@ namespace Weather.ViewModel
             {
                 try
                 {
-                    Week.Clear();
+                    Days.Clear();
 
                     ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
-                    GetForecastNow();
-                    for (int i = 0; i < 7; i++)
-                    {
-                        Week.Add(ValueForecast.daily[i]);
-                    }
                 }
                 catch (Exception ex)
                 {
                     await Application.Current.MainPage.DisplayAlert("Weather Info", ex.Message, "OK");
                 }
+
+                GetForecastNow();
+                for (int i = 0; i < 7; i++)
+                {
+                    Days.Add(ValueForecast.daily[i]);
+                }
+               
             }
             else
             {

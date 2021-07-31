@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Weather.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -38,7 +39,7 @@ namespace Weather.ViewModel
         {
             Delete = new Command<CustomerLocation>(DeleteCity);
             ChoiceCity = new Command<CustomerLocation>(ActiveCity);
-            SaveCommand = new Command(Save);
+            SaveCommand = new Command(async ()=> await Save(Entry_City));
             ListCity = new ObservableCollection<CustomerLocation>();
             ReadPropertiesApp();
 
@@ -75,7 +76,7 @@ namespace Weather.ViewModel
             var list = Serialize();
             Application.Current.Properties[CITY_LIST_PROP_NAME] = list;
         }
-        void ActiveCity(CustomerLocation city)
+        protected void ActiveCity(CustomerLocation city)
         {
             Index_City = ListCity.IndexOf(city);
             foreach(var item in ListCity)
@@ -86,48 +87,69 @@ namespace Weather.ViewModel
             ListCity[Index_City].IsSelected = true;
             SaveToPropertiesApp();
         }
-        private async void Save()
+        protected bool CheckExistCityInList(string city)
         {
+            bool check = false;
+
             foreach (var item in ListCity)
             {
-                if (Entry_City == item.Name)
+                item.IsSelected = false;
+                if (item.Name == city)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Notification", "City is Exist", "Ok");
-                    return;
+                    ActiveCity(item);
+                    check = true;
                 }
             }
-            
-            var location = await ApiGeocoding.GetCoordinatesFromCityName(Entry_City);
-            if(location != null)
+            return check;
+        }
+        protected async Task Save(string city)
+        {
+            try
             {
-                ListCity.Insert(0, new CustomerLocation
+                foreach (var item in ListCity)
                 {
-                    Name = Entry_City,
-                    IsSelected = false,
-                    Lat = location.Latitude,
-                    Lon = location.Longitude
-                });
-                SaveToPropertiesApp();
+                    if (city == item.Name)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Notification", "City is Exist", "Ok");
+                        return;
+                    }
+                }
+
+                var location = await ApiGeocoding.GetCoordinatesFromCityName(city);
+                if (location != null)
+                {
+                    ListCity.Insert(0, new CustomerLocation
+                    {
+                        Name = city,
+                        IsSelected = false,
+                        Lat = location.Latitude,
+                        Lon = location.Longitude
+                    });
+                    SaveToPropertiesApp();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Coordinates Info", "No coordinates received.Please try again", "OK");
+
+                }
+            }
+            finally
+            {
                 Entry_City = null;
             }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Coordinates Info", "No coordinates received.Please try again", "OK");
 
-            }
         }
         private async void DeleteCity(CustomerLocation city)
         {
-            if (city == null)
+            if (city != null)
             {
-                return;
-            }
+                bool result = await Application.Current.MainPage.DisplayAlert($"{city.Name}", $"Do you want to delete an element?", "Yes", "No");
+                if (result)
+                {
+                    ListCity.Remove(city);
+                    SaveToPropertiesApp();
+                }
 
-            bool result = await Application.Current.MainPage.DisplayAlert($"{city.Name}", $"Do you want to delete an element?", "Yes", "No");
-            if (result)
-            {
-                ListCity.Remove(city);
-                SaveToPropertiesApp();
             }
         }
     }
