@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Weather.ViewModel"
              xmlns:converters="clr-namespace:Weather.Converters"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
              x:Class="Weather.View.WeatherDaysPage">
@@ -41,7 +42,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Frame CornerRadius="15"
                                    VerticalOptions="End"
@@ -62,7 +63,7 @@
                                             HorizontalOptions="End"/>
                                 </Grid>
                             </Frame>
-                            <StackLayout Grid.Row="1" Grid.RowSpan="2">
+                            <StackLayout Grid.Row="1" HeightRequest="10">
                                 <Grid Margin="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -134,6 +135,9 @@
                                         </ListView.ItemTemplate>
                                     </ListView>
                                 </Frame>
+                            </StackLayout>
+                            <StackLayout Grid.Row="2">
+                                <ContentView Content="{Binding Map}"/>
                             </StackLayout>
                         </Grid>
                     </SwipeItemView>

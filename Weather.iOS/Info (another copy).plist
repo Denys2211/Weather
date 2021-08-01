@@ -40,7 +40,7 @@
 	<string>NSLocationAlwaysUsageDescription</string>
 	<key>We are using your location</key>
 	<string>NSLocationWhenInUseUsageDescription</string>
-	<key>Can we use your location in use</key>
-	<string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
+	<key>Custom Property</key>
+	<string></string>
 </dict>
 </plist>

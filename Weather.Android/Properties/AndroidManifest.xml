@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="WeatherX" package="com.companyname.weather">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
-	<application android:label="Weather"></application>
+	<application android:label="Weather">
+		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyA2hG0fLEyG3MZUBFvvokouBfJM7RdHnaw" />
+	</application>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-feature android:name="android.hardware.location" android:required="false" />

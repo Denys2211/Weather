@@ -3,11 +3,15 @@ using System.Threading.Tasks;
 using Weather.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace Weather.ViewModel
 {
     public class WeatherPreferencesViewModel : BaseViewModel
     {
+        public Xamarin.Forms.Maps.Map Map { get; protected set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public Command ChoiceCity { get; set; }
         public Command SaveCommand { get; set; }
         public ObservableCollection<CustomerLocation> ListCity { get; set; }
@@ -37,8 +41,19 @@ namespace Weather.ViewModel
         }
         public WeatherPreferencesViewModel ()
         {
+            Map = new Xamarin.Forms.Maps.Map
+            {
+                IsEnabled = true,
+                HasScrollEnabled = true,
+                HasZoomEnabled = true,
+                IsVisible = true,
+                MapType = MapType.Street,
+                HeightRequest = 380,
+                WidthRequest = 150,
+                MoveToLastRegionOnLayoutChange = false
+            };
             Delete = new Command<CustomerLocation>(DeleteCity);
-            ChoiceCity = new Command<CustomerLocation>(ActiveCity);
+            ChoiceCity = new Command<CustomerLocation>(async(o)=> await ActiveCityAsync(o));
             SaveCommand = new Command(async ()=> await Save(Entry_City));
             ListCity = new ObservableCollection<CustomerLocation>();
             ReadPropertiesApp();
@@ -76,18 +91,28 @@ namespace Weather.ViewModel
             var list = Serialize();
             Application.Current.Properties[CITY_LIST_PROP_NAME] = list;
         }
-        protected void ActiveCity(CustomerLocation city)
+        protected Task MapFocusCity(double lat, double lon)
+        {
+            Map.MoveToRegion(
+                    MapSpan.FromCenterAndRadius(
+                        new Position(lat, lon), Distance.FromMiles(5)));
+            return Task.FromResult(true);
+        }
+        protected async Task ActiveCityAsync(CustomerLocation city)
         {
             Index_City = ListCity.IndexOf(city);
             foreach(var item in ListCity)
             {
                 item.IsSelected = false;
             }
+            Latitude = ListCity[Index_City].Lat;
+            Longitude = ListCity[Index_City].Lon;
             Current_City = ListCity[Index_City].Name;
             ListCity[Index_City].IsSelected = true;
+            await MapFocusCity(Latitude, Longitude);
             SaveToPropertiesApp();
         }
-        protected bool CheckExistCityInList(string city)
+        protected async Task<bool> CheckExistCityInListAsync(string city)
         {
             bool check = false;
 
@@ -96,7 +121,7 @@ namespace Weather.ViewModel
                 item.IsSelected = false;
                 if (item.Name == city)
                 {
-                    ActiveCity(item);
+                    await ActiveCityAsync(item);
                     check = true;
                 }
             }

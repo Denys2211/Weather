@@ -6,6 +6,7 @@ using Weather.Models;
 using Weather.View;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace Weather.ViewModel
 {
@@ -26,10 +27,6 @@ namespace Weather.ViewModel
         public string ImageWeatherSourceNow { get; set; }
 
         public float TempNow { get; set; }
-
-        public double Latitude { get; set; }
-
-        public double Longitude { get; set; }
         
         string date_today;
         public string DateToday
@@ -55,20 +52,18 @@ namespace Weather.ViewModel
             {
                 await GetCoordinates();
                 
-                if (!CheckExistCityInList(Current_City))
+                if (!await CheckExistCityInListAsync(Current_City))
                 {
                     Entry_City = Current_City;
                     await Save(Entry_City);
-                    ActiveCity(ListCity[0]);
+                    await ActiveCityAsync(ListCity[0]);
                 }
             }
             else if(ListCity.Count != 0)
             {
-                Latitude = ListCity[Index_City].Lat; 
-                Longitude = ListCity[Index_City].Lon;
-                Current_City = ListCity[Index_City].Name;
+                await ActiveCityAsync(ListCity[Index_City]);
             }
-
+            
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
             var result = await ApiWeather.Get(url);
 
@@ -90,7 +85,7 @@ namespace Weather.ViewModel
                 {
                     Days.Add(ValueForecast.daily[i]);
                 }
-               
+                await MapFocusCity(Latitude,Longitude);
             }
             else
             {
