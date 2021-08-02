@@ -6,7 +6,6 @@ using Weather.Models;
 using Weather.View;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
 
 namespace Weather.ViewModel
 {

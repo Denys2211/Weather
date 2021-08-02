@@ -9,13 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.iOS", "Weather.iOS\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather", "Weather\Weather.csproj", "{0027DA71-F7D1-47D2-9037-369356C401EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{BBF543F2-6B8C-4DFD-9B97-13041973A6E4}"
-	ProjectSection(SolutionItems) = preProject
-		photo_2021-08-02_00-06-50.jpg = photo_2021-08-02_00-06-50.jpg
-		photo_2021-08-02_00-06-56.jpg = photo_2021-08-02_00-06-56.jpg
-		photo_2021-08-02_00-07-00.jpg = photo_2021-08-02_00-07-00.jpg
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
