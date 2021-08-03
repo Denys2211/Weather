@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using System.ComponentModel;
 
-namespace Weather.View
+namespace Weather.Views
 {
     [DesignTimeVisible(false)]
     public partial class WeatherDaysPage : ContentPage

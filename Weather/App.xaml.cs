@@ -1,6 +1,6 @@
 ﻿using System;
 using Weather.Services;
-using Weather.View;
+using Weather.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

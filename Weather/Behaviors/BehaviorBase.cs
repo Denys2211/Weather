@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace Xappy.Behaviors
+namespace Weather.Behaviors
 {
     public class BehaviorBase<T> : Behavior<T> where T : BindableObject
     {

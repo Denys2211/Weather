@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:Weather.ViewModel"
+             xmlns:local="clr-namespace:Weather.ViewModels"
              xmlns:converters="clr-namespace:Weather.Converters"
              xmlns:anim="clr-namespace:Xamanimation;assembly=Xamanimation"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
-             x:Class="Weather.View.WeatherDaysPage">
+             x:Class="Weather.Views.WeatherDaysPage">
     
     <ContentPage.BindingContext>
         <local:WeatherDaysViewModel/>
@@ -28,7 +28,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
    
-    <SwipeView x:Name="MainSwipeView" BackgroundColor="WhiteSmoke">
+    <SwipeView x:Name="MainSwipeView" BackgroundColor="WhiteSmoke" Is>
         <SwipeView.LeftItems>
             <SwipeItems Mode="Reveal" 
                         SwipeBehaviorOnInvoked="RemainOpen">
@@ -43,7 +43,6 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Frame CornerRadius="15"
                                 VerticalOptions="End"
@@ -89,7 +88,7 @@
                                         TextColor="Black"
                                         Command="{Binding SaveCommand}"/>
                             </Grid>
-                            <Frame CornerRadius="15" Margin="0" HasShadow="False">
+                            <Frame CornerRadius="15" Margin="10" HasShadow="False">
                                 <ListView ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=ListCity}" 
                                             SeparatorVisibility="Default"
                                             CompressedLayout.IsHeadless="False"
@@ -145,11 +144,16 @@
             </SwipeItems>
         </SwipeView.LeftItems>
             
-        <Grid>
+        <Grid Margin="0"
+              Padding="0,0,0,0"
+              BackgroundColor="#0fadd1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.Padding>
+                <OnPlatform x:TypeArguments="Thickness" iOS="0,65,0,0"/>
+            </Grid.Padding>
             <!-- HEADER BACKGROUND -->
             <BoxView Margin="0,0,0,0"
                 BackgroundColor="#0fadd1"
@@ -158,24 +162,28 @@
                                 Source={x:Reference Scroll}, 
                                 Converter={StaticResource scrollValueConventer}, 
                                 ConverterParameter='-5;0;100;false;0'}"
-                />
-            
-            <Frame  Margin="0,70,0,0"
-                    HasShadow="False"
+                >
+            </BoxView>
+            <Frame HasShadow="False"
                     Padding="0"
                     TranslationY="{Binding RelativeScrollY, 
                     Source={x:Reference Scroll}, 
                     Converter={StaticResource scrollValueConventer}, 
                     ConverterParameter='-5;0;100;false;0'}">
+                <Frame.Margin>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS ="0,0,0,0"
+                                Android ="0,70,0,0"/>
+                </Frame.Margin>
                 <Frame.Behaviors>
-                <anim:AnimateProgressDouble 
-                    TargetProperty="VisualElement.Opacity"
-                    Progress="{Binding ScrollY, Source={x:Reference Scroll}}"
-                    Minimum="0"
-                    Maximum="180"
-                    From="1"
-                    To="0"/>        
-            </Frame.Behaviors>
+                    <anim:AnimateProgressDouble 
+                        TargetProperty="VisualElement.Opacity"
+                        Progress="{Binding ScrollY, Source={x:Reference Scroll}}"
+                        Minimum="0"
+                        Maximum="400"
+                        From="1"
+                        To="0"/>        
+                </Frame.Behaviors>
                 <Grid BackgroundColor="#0fadd1"> 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -189,7 +197,7 @@
                         </Grid.RowDefinitions>
                         <Grid.Margin>
                             <OnPlatform x:TypeArguments="Thickness"
-                                        iOS="0,35,0,0"/>
+                                        iOS="0,45,0,0"/>
                         </Grid.Margin>
                         
                         <Grid Grid.Row="1">
@@ -340,19 +348,44 @@
             </Frame>
                 
             <RefreshView Command="{Binding LoadItemsCommand}"
-                            IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-                <ScrollView Margin="0,0,0,0">
+                         Grid.RowSpan="2"
+                         IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <ScrollView>
+                    <ScrollView.Margin>
+                        <OnPlatform x:TypeArguments="Thickness"
+                                    iOS ="0,15,0,-300"
+                                    Android ="0,0,0,0"/>
+                        </ScrollView.Margin>
+                    <ScrollView.Padding>
+                        <OnPlatform x:TypeArguments="Thickness"
+                                    iOS ="0,-10,0,0"
+                                    Android ="0,0,0,0"/>
+                        </ScrollView.Padding>
                     <ScrollView.Behaviors>
                         <anim:ScrollViewScrollBehavior x:Name="Scroll"/>
                     </ScrollView.Behaviors>
                     <StackLayout 
-                            Margin="0,475,0,0"
                             Spacing="20">
+                        <StackLayout.Margin>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                        iOS ="0,420,0,0"
+                                        Android ="0,475,0,0"/>
+                        </StackLayout.Margin>
                         <Frame CornerRadius="20"
                                 Visual="Material"
                                 d:IsVisible="False"
                                 >
-                            <StackLayout Margin="0,0,0,-150">
+                            <Frame.Margin>
+                                <OnPlatform x:TypeArguments="Thickness"
+                                            iOS ="0,0,0,-250"
+                                            Android ="0,0,0,0"/>
+                            </Frame.Margin>
+                            <StackLayout>
+                                <StackLayout.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness"
+                                                iOS ="0,0,0,0"
+                                                Android ="0,0,0,-130"/>
+                                </StackLayout.Margin>
                                 <CollectionView ItemsSource="{Binding Days}"
                                             CompressedLayout.IsHeadless="False"
                                             Margin="0,0,0,0">
@@ -421,12 +454,17 @@
                 </ScrollView>
             </RefreshView>
             <ImageButton Source="Menu"
-                        Margin="20"
                         Clicked="OpenSwipe"
                         WidthRequest="33"
                         HeightRequest="35"
                         HorizontalOptions="Start"
-                        VerticalOptions="Start" />
+                        VerticalOptions="Start" >
+                <ImageButton.Margin>
+                    <OnPlatform x:TypeArguments="Thickness"
+                                iOS="20,-20,0,0"
+                                Android ="20"/>
+                </ImageButton.Margin>
+            </ImageButton>
         </Grid>
     </SwipeView>
 </ContentPage>

@@ -5,7 +5,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace Weather.ViewModel
+namespace Weather.ViewModels
 {
     public class WeatherPreferencesViewModel : BaseViewModel
     {

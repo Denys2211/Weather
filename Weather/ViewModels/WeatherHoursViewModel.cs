@@ -2,7 +2,7 @@
 using Weather.Models;
 using Xamarin.Forms;
 
-namespace Weather.ViewModel
+namespace Weather.ViewModels
 {
     public class WeatherHoursViewModel : BaseViewModel
     {

@@ -6,7 +6,7 @@ using Weather.Models;
 using Weather.Services;
 using Xamarin.Forms;
 
-namespace Weather.ViewModel
+namespace Weather.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

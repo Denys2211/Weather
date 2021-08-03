@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weather.ViewModel;
+using Weather.ViewModels;
 using Xamarin.Forms;
 
-namespace Weather.View
+namespace Weather.Views
 {
     public partial class WeatherHoursPage : ContentPage
     {
