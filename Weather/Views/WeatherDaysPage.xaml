@@ -26,6 +26,7 @@
             </Style>
             <converters:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
             <converters:ScrollValueConverter x:Key="scrollValueConventer"/>
+            <converters:TemperatureConverter x:Key="temperatureConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
    
@@ -420,11 +421,15 @@
                                                                 Grid.Column="4"
                                                                 Grid.ColumnSpan="3"
                                                                 HorizontalOptions="Center"/>
-                                                        <Label Grid.Row="1"
+                                                        <Label Grid.Row="0"
+                                                               Grid.RowSpan="2"
+                                                               HorizontalOptions="Center"
+                                                               VerticalOptions="Center"
+                                                               FontSize="16"
                                                                 Style="{StaticResource labelStyle}"
                                                                 Grid.Column="8"
                                                                 Grid.ColumnSpan="2"
-                                                                Text="{Binding temp.max,StringFormat='{}{0:#}°'}"/>
+                                                                Text="{Binding temp.max, Converter={StaticResource temperatureConverter}}"/>
                                                         <Grid.GestureRecognizers>
                                                             <TapGestureRecognizer
                                                                 Grid.ColumnSpan="9"
