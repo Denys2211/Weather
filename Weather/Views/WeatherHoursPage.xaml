@@ -23,6 +23,7 @@
                         Value="White" />
             </Style>
             <converters:LongToDateTimeConverter x:Key="longToDateTimeConverter" />
+            <converters:TemperatureConverter x:Key="temperatureConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -75,7 +76,7 @@
                                                 Style="{StaticResource labelStyle}"
                                                 Grid.Column="8"
                                                 Grid.ColumnSpan="2"
-                                                Text="{Binding temp,StringFormat='{}{0:#}°'}"/>
+                                                Text="{Binding temp,Converter={StaticResource temperatureConverter}}"/>
                                     </Grid>
                                 </Frame>
                             </StackLayout>

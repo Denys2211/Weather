@@ -11,6 +11,10 @@ namespace Weather.Converters
         {
             string temperature = ((float)value).ToString();
             var splittemperature = temperature.Split('.');
+            if(splittemperature[0] == "-0")
+            {
+                splittemperature[0] = "0";
+            }
 
             return splittemperature[0]+ "°";
         }
