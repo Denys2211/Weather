@@ -70,6 +70,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Info %28copy%29.plist" />
     <None Include="Info %28another copy%29.plist" />
+    <None Include="Info.plist" />
+    <Compile Include="Renderers\CustomEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -221,5 +223,6 @@
     <Folder Include="Assets.xcassets\w13n.imageset\" />
     <Folder Include="Assets.xcassets\w50d.imageset\" />
     <Folder Include="Assets.xcassets\w50n.imageset\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
              xmlns:converters="clr-namespace:Weather.Converters"
              xmlns:anim="clr-namespace:Xamanimation;assembly=Xamanimation"
              mc:Ignorable="d"
+             xmlns:control="clr-namespace:Weather.CustomControls"
              NavigationPage.HasNavigationBar="False"
              x:Class="Weather.Views.WeatherDaysPage">
     
@@ -28,7 +29,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
    
-    <SwipeView x:Name="MainSwipeView" BackgroundColor="WhiteSmoke" Is>
+    <SwipeView x:Name="MainSwipeView" BackgroundColor="WhiteSmoke">
         <SwipeView.LeftItems>
             <SwipeItems Mode="Reveal" 
                         SwipeBehaviorOnInvoked="RemainOpen">
@@ -74,7 +75,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Entry Grid.ColumnSpan="4"
+                                <control:CustomEntry Grid.ColumnSpan="4"
                                         Placeholder="City"
                                         ClearButtonVisibility="WhileEditing"
                                         VerticalTextAlignment="Center"
@@ -136,7 +137,8 @@
                                 </ListView>
                             </Frame>
                         </StackLayout>
-                        <StackLayout Grid.Row="2">
+                        <StackLayout Grid.Row="2"
+                                     VerticalOptions="CenterAndExpand">
                             <ContentView Content="{Binding Map}"/>
                         </StackLayout>
                     </Grid>
@@ -154,16 +156,6 @@
             <Grid.Padding>
                 <OnPlatform x:TypeArguments="Thickness" iOS="0,65,0,0"/>
             </Grid.Padding>
-            <!-- HEADER BACKGROUND -->
-            <BoxView Margin="0,0,0,0"
-                BackgroundColor="#0fadd1"
-                HorizontalOptions="Fill"
-                TranslationY="{Binding RelativeScrollY, 
-                                Source={x:Reference Scroll}, 
-                                Converter={StaticResource scrollValueConventer}, 
-                                ConverterParameter='-5;0;100;false;0'}"
-                >
-            </BoxView>
             <Frame HasShadow="False"
                     Padding="0"
                     TranslationY="{Binding RelativeScrollY, 
@@ -364,8 +356,7 @@
                     <ScrollView.Behaviors>
                         <anim:ScrollViewScrollBehavior x:Name="Scroll"/>
                     </ScrollView.Behaviors>
-                    <StackLayout 
-                            Spacing="20">
+                    <StackLayout TranslationY="30">
                         <StackLayout.Margin>
                             <OnPlatform x:TypeArguments="Thickness"
                                         iOS ="0,420,0,0"
@@ -384,7 +375,7 @@
                                 <StackLayout.Margin>
                                     <OnPlatform x:TypeArguments="Thickness"
                                                 iOS ="0,0,0,0"
-                                                Android ="0,0,0,-130"/>
+                                                Android ="0,0,0,-100"/>
                                 </StackLayout.Margin>
                                 <CollectionView ItemsSource="{Binding Days}"
                                             CompressedLayout.IsHeadless="False"
