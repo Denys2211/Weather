@@ -11,23 +11,53 @@ namespace Weather.ViewModels
 {
     public class WeatherDaysViewModel : WeatherPreferencesViewModel 
     {
+        string date_today;
+        private float humidityNow;
+        private float windNow;
+        private float cloudinessNow;
+        private float pressureNow;
+        private string descriptionWeatherNow;
+        private string imageWeatherSourceNow;
+        private float tempNow;
+
         public ObservableCollection<Daily> Days { get; set; }
         
-        public float HumidityNow { get; set; }
+        public float HumidityNow
+        {
+            get { return humidityNow; }
+            set { SetProperty(ref humidityNow, value); }
+        }
+        public float WindNow
+        {
+            get { return windNow; }
+            set { SetProperty(ref windNow, value); }
+        }
+        public float PressureNow
+        {
+            get { return pressureNow; }
+            set { SetProperty(ref pressureNow, value); }
+        }
+        public float CloudinessNow
+        {
+            get { return cloudinessNow; }
+            set { SetProperty(ref cloudinessNow, value); }
+        }
+        public string DescriptionWeatherNow
+        {
+            get { return descriptionWeatherNow; }
+            set { SetProperty(ref descriptionWeatherNow, value); }
+        }
+        public string ImageWeatherSourceNow
+        {
+            get { return imageWeatherSourceNow; }
+            set { SetProperty(ref imageWeatherSourceNow, value); }
+        }
+        public float TempNow
+        {
+            get { return tempNow; }
+            set { SetProperty(ref tempNow, value); }
+        }
 
-        public float WindNow { get; set; }
-
-        public float PressureNow { get; set; }
-
-        public float CloudinessNow { get; set; }
-
-        public string DescriptionWeatherNow { get; set; }
-
-        public string ImageWeatherSourceNow { get; set; }
-
-        public float TempNow { get; set; }
-        
-        string date_today;
         public string DateToday
         {
             get { return date_today; }
@@ -114,33 +144,16 @@ namespace Weather.ViewModels
             }
 
         }
-        async void GetForecastNow()
+        void GetForecastNow()
         {
-            try
-            {
-                DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
-                RaisePropertyChanged(nameof(DescriptionWeatherNow));
-                ImageWeatherSourceNow = ValueForecast.hourly[3].weather[0].icon;
-                RaisePropertyChanged(nameof(ImageWeatherSourceNow));
-                TempNow = ValueForecast.hourly[3].temp;
-                RaisePropertyChanged(nameof(TempNow));
-                WindNow = ValueForecast.daily[0].wind_speed;
-                RaisePropertyChanged(nameof(WindNow));
-                HumidityNow = ValueForecast.daily[0].humidity;
-                RaisePropertyChanged(nameof(HumidityNow));
-                PressureNow = ValueForecast.daily[0].pressure;
-                RaisePropertyChanged(nameof(PressureNow));
-                CloudinessNow = ValueForecast.daily[0].clouds;
-                RaisePropertyChanged(nameof(CloudinessNow));
-                DateToday = DateTime.Now.ToString();
-            }
-            catch(Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Notification", ex.Message, "OK");
-
-            }
-
-
+            DescriptionWeatherNow = ValueForecast.daily[0].weather[0].description;
+            ImageWeatherSourceNow = ValueForecast.hourly[3].weather[0].icon;
+            TempNow = ValueForecast.hourly[3].temp;
+            WindNow = ValueForecast.daily[0].wind_speed;
+            HumidityNow = ValueForecast.daily[0].humidity;
+            PressureNow = ValueForecast.daily[0].pressure;
+            CloudinessNow = ValueForecast.daily[0].clouds;
+            DateToday = DateTime.Now.ToString();
         }
         async void ForecastHourly(Daily daily)
         {
@@ -153,7 +166,7 @@ namespace Weather.ViewModels
                 }
             }
 
-             await App.Current.MainPage.Navigation.PushAsync(new WeatherHoursPage());
+            await App.Current.MainPage.Navigation.PushAsync(new WeatherHoursPage());
         }
         
     }
