@@ -92,11 +92,11 @@
                             </Grid>
                             <Frame CornerRadius="15" Margin="10" HasShadow="False">
                                 <ListView ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=ListCity}" 
-                                            SeparatorVisibility="Default"
-                                            CompressedLayout.IsHeadless="False"
-                                            IsGroupingEnabled="False"
-                                            HasUnevenRows="True"
-                                            Margin="0,0,0,0">
+                                          SeparatorVisibility="Default"
+                                          CompressedLayout.IsHeadless="False"
+                                          IsGroupingEnabled="False"
+                                          HasUnevenRows="True"
+                                          Margin="0,0,0,0">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <ViewCell>
@@ -158,11 +158,11 @@
                 <OnPlatform x:TypeArguments="Thickness" iOS="0,65,0,0"/>
             </Grid.Padding>
             <Frame HasShadow="False"
-                    Padding="0"
+                   Padding="0"
                     TranslationY="{Binding RelativeScrollY, 
                     Source={x:Reference Scroll}, 
                     Converter={StaticResource scrollValueConventer}, 
-                    ConverterParameter='-5;0;100;false;0'}">
+                    ConverterParameter='-3.5;0;100;false;0'}">
                 <Frame.Margin>
                     <OnPlatform x:TypeArguments="Thickness"
                                 iOS ="0,0,0,0"
