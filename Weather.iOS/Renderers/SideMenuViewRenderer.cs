@@ -20,11 +20,11 @@ namespace Weather.iOS.Renderers
 
             public SideMenuViewRenderer()
             {
-                _leftSwipeGesture = new UISwipeGestureRecognizer(OnSwiped)
-                {
-                    Direction = UISwipeGestureRecognizerDirection.Left
-                };
-                AddGestureRecognizer(_leftSwipeGesture);
+                //_leftSwipeGesture = new UISwipeGestureRecognizer(OnSwiped)
+                //{
+                //    Direction = UISwipeGestureRecognizerDirection.Left
+                //};
+                //AddGestureRecognizer(_leftSwipeGesture);
                 _rightSwipeGesture = new UISwipeGestureRecognizer(OnSwiped)
                 {
                     Direction = UISwipeGestureRecognizerDirection.Right

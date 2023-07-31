@@ -30,6 +30,7 @@ namespace Weather.CustomControls.SideMenu
         #endregion
 
         #region Public Bindable Properties
+        public static readonly BindableProperty LeftSwipeGestureProperty = BindableProperty.Create(nameof(LeftSwipeGesture), typeof(bool), typeof(SideMenuView), true);
 
         public static readonly BindableProperty DiffProperty = BindableProperty.Create(nameof(Diff), typeof(double), typeof(SideMenuView), 0.0, BindingMode.OneWayToSource);
 
@@ -94,7 +95,9 @@ namespace Weather.CustomControls.SideMenu
                     new TapGestureRecognizer
                     {
                         Command = new Command(() => State = SideMenuViewState.Default)
-                    }
+                    },
+
+                    _panGesture
                 }
             });
             Children.Add(_overlayView);
@@ -105,7 +108,6 @@ namespace Weather.CustomControls.SideMenu
             }
 
             _panGesture.PanUpdated += OnPanUpdated;
-            GestureRecognizers.Add(_panGesture);
         }
 
         #endregion
@@ -125,6 +127,12 @@ namespace Weather.CustomControls.SideMenu
         public void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
             var diff = e.TotalX;
+
+            if(diff < 0 && !LeftSwipeGesture)
+            {
+                return;
+            }
+
             var verticalDiff = e.TotalY;
             switch (e.StatusType)
             {
@@ -190,6 +198,12 @@ namespace Weather.CustomControls.SideMenu
         {
             get => (bool)GetValue(ShouldThrottleGestureProperty);
             set => SetValue(ShouldThrottleGestureProperty, value);
+        }
+
+        public bool LeftSwipeGesture
+        {
+            get => (bool)GetValue(LeftSwipeGestureProperty);
+            set => SetValue(LeftSwipeGestureProperty, value);
         }
 
         public SideMenuViewState State
