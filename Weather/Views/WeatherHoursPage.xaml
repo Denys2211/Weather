@@ -5,10 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Weather.ViewModels"
              xmlns:converters="clr-namespace:Weather.Converters"
+             xmlns:control="clr-namespace:Weather.CustomControls"
              mc:Ignorable="d"
              Title="Hourly"
              x:Class="Weather.Views.WeatherHoursPage">
-    
+
     <ContentPage.BindingContext>
         <local:WeatherHoursViewModel/>
     </ContentPage.BindingContext>
@@ -60,7 +61,7 @@
                                                 Style="{StaticResource labelStyle}"
                                                 Grid.ColumnSpan="4"
                                                 Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:HH:mm}'}"/>
-                            <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
+                            <control:CustomImage EntityImageSource="{Binding weather[0].icon}"
                                                 HeightRequest="45"
                                                 Scale="1"
                                                 Grid.RowSpan="2"

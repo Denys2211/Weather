@@ -9,22 +9,53 @@ namespace Weather.Views
     [DesignTimeVisible(false)]
     public partial class WeatherDaysPage : ContentPage
     {
+        private WeatherPreferencesViewModel _viewModel;
+
         public WeatherDaysPage()
         {
             InitializeComponent();
+
+            _viewModel = BindingContext as WeatherPreferencesViewModel;
+        }
+
+        private void _viewModel_OnSityAdded(object sender, EventArgs e)
+        {
+            _viewModel = BindingContext as WeatherPreferencesViewModel;
+
+            if (_viewModel.ListCity != null)
+            {
+                var item = _viewModel.ListCity[0];
+                if (item != null)
+                {
+                    ListCityItems.ScrollTo(_viewModel.ListCity.IndexOf(item), -1, ScrollToPosition.Center, false);
+                }
+            }
+        }
+
+        protected override void OnAppearing()
+        {
             SideMenu.OnGestureStarted += SideMenu_OnGestureFinished;
+            _viewModel.OnSityAdded += _viewModel_OnSityAdded;
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            SideMenu.OnGestureStarted -= SideMenu_OnGestureFinished;
+            _viewModel.OnSityAdded -= _viewModel_OnSityAdded;
+            base.OnDisappearing();
         }
 
         private void SideMenu_OnGestureFinished(object sender, EventArgs e)
         {
-            WeatherPreferencesViewModel viewModel = BindingContext as WeatherPreferencesViewModel;
+            _viewModel = BindingContext as WeatherPreferencesViewModel;
 
-            if (viewModel.ListCity != null)
+            if (_viewModel.ListCity != null)
             {
-                var item = viewModel.ListCity.FirstOrDefault(t => t.IsSelected);
+                var item = _viewModel.ListCity.FirstOrDefault(t => t.IsSelected);
                 if (item != null)
                 {
-                    ListCityItems.ScrollTo(viewModel.ListCity.IndexOf(item), -1, ScrollToPosition.Center, false);
+                    ListCityItems.ScrollTo(_viewModel.ListCity.IndexOf(item), -1, ScrollToPosition.Center, false);
                 }
             }
         }
@@ -42,4 +73,3 @@ namespace Weather.Views
         }
     }
 }
-  

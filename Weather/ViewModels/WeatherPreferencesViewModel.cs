@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Weather.Models;
 using Xamarin.Essentials;
@@ -36,10 +37,13 @@ namespace Weather.ViewModels
         string current_city;
         public string Current_City
         {
-            get { return current_city;  }
+            get { return current_city; }
             set { SetProperty(ref current_city, value); }
         }
-        public WeatherPreferencesViewModel ()
+
+        public event EventHandler OnSityAdded;
+
+        public WeatherPreferencesViewModel()
         {
             Map = new Xamarin.Forms.Maps.Map
             {
@@ -53,14 +57,14 @@ namespace Weather.ViewModels
                 MoveToLastRegionOnLayoutChange = false
             };
             Delete = new Command<CustomerLocation>(DeleteCity);
-            ChoiceCity = new Command<CustomerLocation>(async(o)=> await ActiveCityAsync(o));
-            SaveCommand = new Command(async ()=> await Save(Entry_City));
+            ChoiceCity = new Command<CustomerLocation>(async (o) => await ActiveCityAsync(o));
+            SaveCommand = new Command(async () => await Save(Entry_City));
             ListCity = new ObservableCollection<CustomerLocation>();
             ReadPropertiesApp();
 
         }
         public bool StatusGetCoordinates
-        { 
+        {
             get { return Preferences.Get(nameof(StatusGetCoordinates), false); }
             set
             {
@@ -76,7 +80,7 @@ namespace Weather.ViewModels
         internal void Deserialize(string list)
         {
             ListCity = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<CustomerLocation>>(list);
-            
+
         }
         void ReadPropertiesApp()
         {
@@ -101,7 +105,7 @@ namespace Weather.ViewModels
         protected async Task ActiveCityAsync(CustomerLocation city)
         {
             Index_City = ListCity.IndexOf(city);
-            foreach(var item in ListCity)
+            foreach (var item in ListCity)
             {
                 item.IsSelected = false;
             }
@@ -150,13 +154,17 @@ namespace Weather.ViewModels
                         Lat = location.Latitude,
                         Lon = location.Longitude
                     });
+
                     SaveToPropertiesApp();
+                    await ActiveCityAsync(ListCity[0]);
                 }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Coordinates Info", "No coordinates received.Please try again", "OK");
 
                 }
+
+                OnSityAdded?.Invoke(this, EventArgs.Empty);
             }
             finally
             {
@@ -178,5 +186,5 @@ namespace Weather.ViewModels
             }
         }
     }
-    
+
 }
