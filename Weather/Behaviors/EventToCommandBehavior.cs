@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Input;
+using Weather.Behaviors.Base;
 using Xamarin.Forms;
 
 namespace Weather.Behaviors

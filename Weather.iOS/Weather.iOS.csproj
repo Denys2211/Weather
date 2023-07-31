@@ -51,6 +51,10 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>None</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
+    <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
+    <MtouchProfiling>false</MtouchProfiling>
+    <DeviceSpecificBuild>true</DeviceSpecificBuild>
+    <MtouchFastDev>true</MtouchFastDev>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -62,15 +66,17 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\ScrollRender.cs" />
+    <Compile Include="Renderers\SideMenuViewRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Info %28copy%29.plist" />
-    <None Include="Info %28another copy%29.plist" />
-    <None Include="Info.plist" />
     <Compile Include="Renderers\CustomEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,67 +123,6 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com.png" />
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-1.png" />
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-2.png" />
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-3.png" />
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-4.png" />
-    <ImageAsset Include="Assets.xcassets\Menu.imageset\pngwing.com-5.png" />
-    <ImageAsset Include="Assets.xcassets\cloudiness.imageset\cloudiness.png" />
-    <ImageAsset Include="Assets.xcassets\cloudiness.imageset\cloudiness-1.png" />
-    <ImageAsset Include="Assets.xcassets\cloudiness.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\gauge.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\gauge.imageset\gauge.png" />
-    <ImageAsset Include="Assets.xcassets\gauge.imageset\gauge-1.png" />
-    <ImageAsset Include="Assets.xcassets\humidity.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\humidity.imageset\humidity.png" />
-    <ImageAsset Include="Assets.xcassets\humidity.imageset\humidity-1.png" />
-    <ImageAsset Include="Assets.xcassets\wind.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\wind.imageset\wind.png" />
-    <ImageAsset Include="Assets.xcassets\wind.imageset\wind-1.png" />
-    <ImageAsset Include="Assets.xcassets\w01d.imageset\01d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w01d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w01n.imageset\01n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w01n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w02d.imageset\02d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w02d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w02n.imageset\02n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w02n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w03d.imageset\03d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w03d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w03n.imageset\03n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w03n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w04d.imageset\04d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w04d.imageset\04d%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\w04d.imageset\04d%402x-2.png" />
-    <ImageAsset Include="Assets.xcassets\w04d.imageset\04d%402x-3.png" />
-    <ImageAsset Include="Assets.xcassets\w04d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w04n.imageset\04n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w04n.imageset\04n%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\w04n.imageset\04n%402x-2.png" />
-    <ImageAsset Include="Assets.xcassets\w04n.imageset\04n%402x-3.png" />
-    <ImageAsset Include="Assets.xcassets\w04n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w09d.imageset\09d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w09d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w09n.imageset\09n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w09n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w10d.imageset\10d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w10d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w10n.imageset\10n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w10n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w11d.imageset\11d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w11d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w11n.imageset\11n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w11n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w13d.imageset\13d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w13d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w13n.imageset\13n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w13n.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w50d.imageset\50d%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w50d.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\w50n.imageset\50n%402x.png" />
-    <ImageAsset Include="Assets.xcassets\w50n.imageset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -199,30 +144,5 @@
       <Name>Weather</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets.xcassets\Menu.imageset\" />
-    <Folder Include="Assets.xcassets\cloudiness.imageset\" />
-    <Folder Include="Assets.xcassets\gauge.imageset\" />
-    <Folder Include="Assets.xcassets\humidity.imageset\" />
-    <Folder Include="Assets.xcassets\wind.imageset\" />
-    <Folder Include="Assets.xcassets\w01d.imageset\" />
-    <Folder Include="Assets.xcassets\w01n.imageset\" />
-    <Folder Include="Assets.xcassets\w02d.imageset\" />
-    <Folder Include="Assets.xcassets\w02n.imageset\" />
-    <Folder Include="Assets.xcassets\w03d.imageset\" />
-    <Folder Include="Assets.xcassets\w03n.imageset\" />
-    <Folder Include="Assets.xcassets\w04d.imageset\" />
-    <Folder Include="Assets.xcassets\w04n.imageset\" />
-    <Folder Include="Assets.xcassets\w09d.imageset\" />
-    <Folder Include="Assets.xcassets\w09n.imageset\" />
-    <Folder Include="Assets.xcassets\w10d.imageset\" />
-    <Folder Include="Assets.xcassets\w10n.imageset\" />
-    <Folder Include="Assets.xcassets\w11d.imageset\" />
-    <Folder Include="Assets.xcassets\w11n.imageset\" />
-    <Folder Include="Assets.xcassets\w13d.imageset\" />
-    <Folder Include="Assets.xcassets\w13n.imageset\" />
-    <Folder Include="Assets.xcassets\w50d.imageset\" />
-    <Folder Include="Assets.xcassets\w50n.imageset\" />
-    <Folder Include="Renderers\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

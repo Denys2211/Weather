@@ -1,8 +1,6 @@
-﻿using System;
-using Weather.Services;
+﻿using Weather.Services;
 using Weather.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Weather
 {
@@ -14,6 +12,7 @@ namespace Weather
             DependencyService.Register<ApiCallerGeocoding>();
             DependencyService.Register<ApiCallerWeather>();
             MainPage = new NavigationPage(new WeatherDaysPage());
+            PermissionsService.CheckAndRequestLocationPermission();
         }
 
         protected override void OnStart()

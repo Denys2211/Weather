@@ -27,44 +27,40 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <ListView ItemsSource="{Binding Day}"
-                    SeparatorVisibility="Default"
-                    HasUnevenRows="True"
+    <CollectionView ItemsSource="{Binding Day}"
+                    BackgroundColor="#0fadd1"
                     Margin="0,0,0,0">
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.View>
-                            <StackLayout>
-                                <Frame BackgroundColor="#4f97e3">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.ColumnSpan="4"
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout BackgroundColor="#0fadd1">
+                    <Frame BackgroundColor="#4f97e3" HasShadow="False" BorderColor="#0fadd1" CornerRadius="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.ColumnSpan="4"
                                                 Style="{StaticResource labelStyle}"
                                                 Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
-                                        <Label Grid.Row="1"
+                            <Label Grid.Row="1"
                                                 Style="{StaticResource labelStyle}"
                                                 Grid.ColumnSpan="4"
                                                 Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:HH:mm}'}"/>
-                                        <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
+                            <Image Source="{Binding weather[0].icon, StringFormat='w{0}'}"
                                                 HeightRequest="45"
                                                 Scale="1"
                                                 Grid.RowSpan="2"
@@ -72,18 +68,15 @@
                                                 Grid.Column="4"
                                                 Grid.ColumnSpan="3"
                                                 HorizontalOptions="Center"/>
-                                        <Label Grid.Row="1"
+                            <Label Grid.Row="1"
                                                 Style="{StaticResource labelStyle}"
                                                 Grid.Column="8"
                                                 Grid.ColumnSpan="2"
                                                 Text="{Binding temp,Converter={StaticResource temperatureConverter}}"/>
-                                    </Grid>
-                                </Frame>
-                            </StackLayout>
-                        </ViewCell.View>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </ScrollView>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

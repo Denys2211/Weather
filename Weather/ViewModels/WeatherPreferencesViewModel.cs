@@ -160,7 +160,7 @@ namespace Weather.ViewModels
             }
             finally
             {
-                Entry_City = null;
+                Entry_City = string.Empty;
             }
 
         }

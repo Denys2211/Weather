@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
 
@@ -11,23 +11,74 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2337" />
+    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.3" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.6" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2578" />
     <PackageReference Include="Xamanimation" Version="1.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
-    <Folder Include="Services\" />
-    <Folder Include="Converters\" />
-    <Folder Include="CustomPage\" />
-    <Folder Include="Behaviors\" />
-    <Folder Include="CustomControls\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="CustomControls\" />
+    <None Remove="Images\01d.png" />
+    <None Remove="Images\01n.png" />
+    <None Remove="Images\02d.png" />
+    <None Remove="Images\02n.png" />
+    <None Remove="Images\03d.png" />
+    <None Remove="Images\03n.png" />
+    <None Remove="Images\04d.png" />
+    <None Remove="Images\04n.png" />
+    <None Remove="Images\09d.png" />
+    <None Remove="Images\09n.png" />
+    <None Remove="Images\10d.png" />
+    <None Remove="Images\10n.png" />
+    <None Remove="Images\11d.png" />
+    <None Remove="Images\11n.png" />
+    <None Remove="Images\13d.png" />
+    <None Remove="Images\13n.png" />
+    <None Remove="Images\50d.png" />
+    <None Remove="Images\50n.png" />
+    <None Remove="Images\cloudiness.png" />
+    <None Remove="Images\gauge.png" />
+    <None Remove="Images\humidity.png" />
+    <None Remove="Images\Menu.png" />
+    <None Remove="Images\wind.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\cloudiness.png" />
+    <EmbeddedResource Include="Images\gauge.png" />
+    <EmbeddedResource Include="Images\humidity.png" />
+    <EmbeddedResource Include="Images\Menu.png" />
+    <EmbeddedResource Include="Images\01d.png" />
+    <EmbeddedResource Include="Images\01n.png" />
+    <EmbeddedResource Include="Images\02d.png" />
+    <EmbeddedResource Include="Images\02n.png" />
+    <EmbeddedResource Include="Images\03d.png" />
+    <EmbeddedResource Include="Images\03n.png" />
+    <EmbeddedResource Include="Images\04d.png" />
+    <EmbeddedResource Include="Images\04n.png" />
+    <EmbeddedResource Include="Images\09d.png" />
+    <EmbeddedResource Include="Images\09n.png" />
+    <EmbeddedResource Include="Images\10d.png" />
+    <EmbeddedResource Include="Images\10n.png" />
+    <EmbeddedResource Include="Images\11d.png" />
+    <EmbeddedResource Include="Images\11n.png" />
+    <EmbeddedResource Include="Images\13d.png" />
+    <EmbeddedResource Include="Images\13n.png" />
+    <EmbeddedResource Include="Images\50d.png" />
+    <EmbeddedResource Include="Images\50n.png" />
+    <EmbeddedResource Include="Images\wind.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="CustomControls\CustomImage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
