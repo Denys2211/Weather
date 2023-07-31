@@ -340,7 +340,7 @@
                                   WidthRequest="33"
                                   HeightRequest="35"
                                   VerticalOptions="Center"
-                                  Margin="{OnPlatform Android=20, iOS='20,50,0,0'}">
+                                  Margin="{OnPlatform Android=15, iOS='20,45,0,0'}">
                     <control:CustomImage.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OpenSwipe"/>
                     </control:CustomImage.GestureRecognizers>
