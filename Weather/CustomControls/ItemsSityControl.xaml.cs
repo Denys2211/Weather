@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using Weather.Extensions;
 using Weather.Models;
 using Weather.ViewModels;
@@ -80,26 +81,16 @@ namespace Weather.CustomControls
 
             var frame = control.FindByName("GeneralFrame") as Frame;
 
-            if (frame != null && _weatherPreferencesViewModel != null)
+            if (control.TrySetFrameCommands(frame, model))
+                return;
+            else
             {
-                var gest = frame.GestureRecognizers[0];
-
-                if (gest != null && gest is TapGestureRecognizer recognizer)
+                Task.Run(async () => 
                 {
-                    recognizer.Command = _weatherPreferencesViewModel.ChoiceCity;
-                    recognizer.CommandParameter = model;
-                }
+                    await Task.Delay(1000);
 
-                Binding CommandBinding = new Binding();
-                CommandBinding.Source = _weatherPreferencesViewModel;
-                CommandBinding.Path = "Delete";
-                CommandBinding.Mode = BindingMode.TwoWay;
-                frame.SetBinding(TouchEffect.LongPressCommandProperty, CommandBinding);
-
-                var parameterBinding = new Binding();
-                parameterBinding.Source = model;
-
-                frame.SetBinding(TouchEffect.LongPressCommandParameterProperty, parameterBinding);
+                    control.TrySetFrameCommands(frame, model);
+                });
             }
         }
 
@@ -147,6 +138,11 @@ namespace Weather.CustomControls
                     c.Value.Scale = 1.5;
                     c.Value.Opacity = 1;
                 }
+                else
+                {
+                    c.Value.Scale = 0;
+                    c.Value.Opacity = 0;
+                }
             });
         }
 
@@ -156,6 +152,35 @@ namespace Weather.CustomControls
             {
                 Reset((CustomerLocation)e.NewItems[0]);
             }
+        }
+
+        public bool TrySetFrameCommands(Frame frame, CustomerLocation model)
+        {
+            if (frame != null && _weatherPreferencesViewModel != null)
+            {
+                var gest = frame.GestureRecognizers[0];
+
+                if (gest != null && gest is TapGestureRecognizer recognizer)
+                {
+                    recognizer.Command = _weatherPreferencesViewModel.ChoiceCity;
+                    recognizer.CommandParameter = model;
+                }
+
+                Binding CommandBinding = new Binding();
+                CommandBinding.Source = _weatherPreferencesViewModel;
+                CommandBinding.Path = "Delete";
+                CommandBinding.Mode = BindingMode.TwoWay;
+                frame.SetBinding(TouchEffect.LongPressCommandProperty, CommandBinding);
+
+                var parameterBinding = new Binding();
+                parameterBinding.Source = model;
+
+                frame.SetBinding(TouchEffect.LongPressCommandParameterProperty, parameterBinding);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
