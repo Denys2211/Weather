@@ -4,6 +4,8 @@ using System.ComponentModel;
 using Weather.ViewModels;
 using System.Linq;
 using Weather.Services.VibrationService;
+using Weather.CustomControls;
+using System.Collections.Specialized;
 
 namespace Weather.Views
 {
@@ -17,6 +19,7 @@ namespace Weather.Views
             InitializeComponent();
 
             _viewModel = BindingContext as WeatherPreferencesViewModel;
+            _viewModel.ListCity.CollectionChanged += ItemsSityControl.OnItemsChanged;
         }
 
         private void _viewModel_OnSityAdded(object sender, EventArgs e)
@@ -35,6 +38,7 @@ namespace Weather.Views
 
         protected override void OnAppearing()
         {
+            _viewModel.ListCity.CollectionChanged += ItemsSityControl.OnItemsChanged;
             SideMenu.OnGestureStarted += SideMenu_OnGestureFinished;
             _viewModel.OnSityAdded += _viewModel_OnSityAdded;
             base.OnAppearing();
@@ -42,6 +46,7 @@ namespace Weather.Views
 
         protected override void OnDisappearing()
         {
+            _viewModel.ListCity.CollectionChanged -= ItemsSityControl.OnItemsChanged;
             SideMenu.OnGestureStarted -= SideMenu_OnGestureFinished;
             _viewModel.OnSityAdded -= _viewModel_OnSityAdded;
             base.OnDisappearing();

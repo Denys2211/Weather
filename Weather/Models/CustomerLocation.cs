@@ -17,7 +17,11 @@ namespace Weather.Models
         public bool IsSelected
         {
             get => _isSelected;
-            set { _isSelected = value; OnPropertyChanged(nameof(IsSelected)); } 
+            set 
+            { 
+                _isSelected = value; 
+                OnPropertyChanged(nameof(IsSelected));
+            } 
         }
 
     }
