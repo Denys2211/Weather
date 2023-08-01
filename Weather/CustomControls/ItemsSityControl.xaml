@@ -21,7 +21,7 @@
                                           NumberOfTapsRequired="1"/>
                 </Frame.GestureRecognizers>
                 <Grid HeightRequest="55">
-                    <BoxView x:Name="SideBox" Scale="1.5" HeightRequest="55" CornerRadius="27">
+                    <BoxView x:Name="SideBox" HeightRequest="55" CornerRadius="27">
                         <BoxView.Background>
                             <LinearGradientBrush StartPoint="0,0"
                                                  EndPoint="1,0">

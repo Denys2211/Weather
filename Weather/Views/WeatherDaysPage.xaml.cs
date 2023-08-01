@@ -19,7 +19,6 @@ namespace Weather.Views
             InitializeComponent();
 
             _viewModel = BindingContext as WeatherPreferencesViewModel;
-            _viewModel.ListCity.CollectionChanged += ItemsSityControl.OnItemsChanged;
         }
 
         private void _viewModel_OnSityAdded(object sender, EventArgs e)

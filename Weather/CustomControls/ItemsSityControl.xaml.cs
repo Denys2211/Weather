@@ -15,7 +15,7 @@ namespace Weather.CustomControls
     public partial class ItemsSityControl : ContentView
     {
         private static Dictionary<CustomerLocation, BoxView> _boxes = new Dictionary<CustomerLocation, BoxView>();
-        private static WeatherPreferencesViewModel _weatherPreferencesViewModel = new WeatherPreferencesViewModel();
+        private static WeatherPreferencesViewModel _weatherPreferencesViewModel;
 
         public ItemsSityControl()
         {
@@ -134,20 +134,19 @@ namespace Weather.CustomControls
             }
             catch (Exception ex)
             {
-
-            }
-            finally
-            {
-                box.CancelAnimations();
+                Console.WriteLine("Touch animation failed.");
             }
         }
 
-        public static void Reset( )
+        public static void Reset(CustomerLocation addedCustomerLocation)
         {
             _boxes.ForEach(c =>
             {
-                c.Value.Scale = 1.5;
-                c.Value.Opacity = 1;    
+                if (c.Key.Name != addedCustomerLocation.Name)
+                {
+                    c.Value.Scale = 1.5;
+                    c.Value.Opacity = 1;
+                }
             });
         }
 
@@ -155,7 +154,7 @@ namespace Weather.CustomControls
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                Reset();
+                Reset((CustomerLocation)e.NewItems[0]);
             }
         }
     }
