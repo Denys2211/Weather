@@ -7,7 +7,8 @@ using Android.OS;
 
 namespace Weather.Droid
 {
-    [Activity(Label = "Weather", Icon = "@mipmap/icon", Theme = "@style/MainTheme", ScreenOrientation= ScreenOrientation.Portrait, LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "Weather", MainLauncher = true, Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
