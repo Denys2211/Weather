@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Weather.Models;
+using Weather.Services.VibrationService;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -174,6 +175,8 @@ namespace Weather.ViewModels
         }
         private async void DeleteCity(CustomerLocation city)
         {
+            DependencyService.Get<IVibrator>()?.Vibrate();
+
             if (city != null)
             {
                 bool result = await Application.Current.MainPage.DisplayAlert($"{city.Name}", $"Do you want to delete an element?", "Yes", "No");

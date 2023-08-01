@@ -418,6 +418,7 @@
                                 <StackLayout>
                                     <Frame CornerRadius="15"
                                            Margin="10"
+                                           xct:TouchEffect.PressedBackgroundColor="LightGray"
                                            xct:TouchEffect.LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherPreferencesViewModel}}, Path=Delete}"
                                            xct:TouchEffect.LongPressCommandParameter="{Binding .}">
                                         <Frame.Triggers>

@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using System.ComponentModel;
 using Weather.ViewModels;
 using System.Linq;
+using Weather.Services.VibrationService;
 
 namespace Weather.Views
 {
@@ -58,6 +59,8 @@ namespace Weather.Views
                     ListCityItems.ScrollTo(_viewModel.ListCity.IndexOf(item), -1, ScrollToPosition.Center, false);
                 }
             }
+
+            DependencyService.Get<IVibrator>()?.Vibrate();
         }
 
         public void OpenSwipe(object sender, EventArgs e)

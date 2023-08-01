@@ -13,6 +13,9 @@ namespace Weather.iOS.Renderers
         {
             base.OnElementChanged(e);
 
+            Scrolled -= ScrollviewRender_Scrolled;
+            Scrolled += ScrollviewRender_Scrolled;
+
             if (e.OldElement != null || Element == null)
             {
                 return;
@@ -22,6 +25,24 @@ namespace Weather.iOS.Renderers
             {
                 this.ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Never;
             }
+        }
+
+        private void ScrollviewRender_Scrolled(object sender, System.EventArgs e)
+        {
+            var scroll = Element as CustomScrollView;
+
+            if (scroll != null)
+            {
+                if (scroll.ScrollY <= 0)
+                {
+                    Bounces = true;
+                }
+                else
+                {
+                    Bounces = false;
+                }
+            }
+            
         }
     }
 }

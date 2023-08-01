@@ -75,6 +75,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\ScrollRender.cs" />
     <Compile Include="Renderers\SideMenuViewRenderer.cs" />
+    <Compile Include="Services\VibrationService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
