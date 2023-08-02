@@ -3,4 +3,6 @@
 <img src="Content/IMG_1702.PNG" width="224" height="464"> 
 
 # Video
-<video src="https://drive.google.com/file/d/1pgekc_yAfKVTjTghO7vCXTcA0MbhpnI6/view?usp=sharing"/>
+https://github.com/Denys2211/Weather/assets/75207437/0d61872f-51a6-4a36-ac46-e4f400d74e4b
+
+
