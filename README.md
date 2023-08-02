@@ -3,4 +3,4 @@
 <img src="Content/IMG_1702.PNG" width="224" height="464"> 
 
 # Video
-https://user-images.githubusercontent.com/Content/RPReplay_Final1690993265.MP4
+<video src='Content/RPReplay_Final1690993265.MP4' width="224" height="464">
