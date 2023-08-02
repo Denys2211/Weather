@@ -6,9 +6,9 @@ using Xamarin.Forms;
 
 namespace Weather.Services
 {
-    public class ApiCallerGeocoding
+    public class ApiCallerGeocoding : IApiCallerGeocoding
     {
-        internal async Task<Location> GetLocationGPS()
+        public async Task<Location> GetLocationGPS()
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Weather.Services
             }
         }
 
-        internal async Task<string> GetCity(Location location)
+        public async Task<string> GetCity(Location location)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Weather.Services
 
         }
 
-        internal async Task<Location> GetCoordinatesFromCityName(string address)
+        public async Task<Location> GetCoordinatesFromCityName(string address)
         {
             try
             {
@@ -57,5 +57,12 @@ namespace Weather.Services
                 return null;
             }
         }
+    }
+
+    public interface IApiCallerGeocoding
+    {
+        Task<Location> GetLocationGPS();
+        Task<string> GetCity(Location location);
+        Task<Location> GetCoordinatesFromCityName(string address);
     }
 }

@@ -159,11 +159,6 @@ namespace Weather.ViewModels
                     SaveToPropertiesApp();
                     await ActiveCityAsync(ListCity[0]);
                 }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Coordinates Info", "No coordinates received.Please try again", "OK");
-
-                }
 
                 OnSityAdded?.Invoke(this, EventArgs.Empty);
             }

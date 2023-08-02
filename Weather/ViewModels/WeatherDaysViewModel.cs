@@ -98,16 +98,9 @@ namespace Weather.ViewModels
 
             if (result.Successful)
             {
-                try
-                {
-                    Days.Clear();
+                Days.Clear();
 
-                    ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
-                }
-                catch (Exception ex)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Weather Info", ex.Message, "OK");
-                }
+                ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
                 GetForecastNow();
                 for (int i = 0; i < 7; i++)
@@ -115,10 +108,6 @@ namespace Weather.ViewModels
                     Days.Add(ValueForecast.daily[i]);
                 }
                 await MapFocusCity(Latitude,Longitude);
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Weather Info", "No forecast information found", "OK");
             }
         }
         async Task GetCoordinates()

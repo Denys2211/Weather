@@ -7,7 +7,6 @@
              xmlns:converters="clr-namespace:Weather.Converters"
              xmlns:anim="clr-namespace:Weather.Behaviors"
              xmlns:side="clr-namespace:Weather.CustomControls.SideMenu"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:control="clr-namespace:Weather.CustomControls"
              x:Class="Weather.Views.WeatherDaysPage"
              NavigationPage.HasNavigationBar="False"
