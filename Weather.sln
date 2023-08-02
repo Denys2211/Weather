@@ -9,6 +9,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.iOS", "Weather.iOS\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather", "Weather\Weather.csproj", "{0027DA71-F7D1-47D2-9037-369356C401EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{C13F630F-0AA1-4E9A-9907-4E9D0F2B8D87}"
+	ProjectSection(SolutionItems) = preProject
+		Content\IMG_1700.PNG = Content\IMG_1700.PNG
+		Content\IMG_1701.PNG = Content\IMG_1701.PNG
+		Content\IMG_1702.PNG = Content\IMG_1702.PNG
+		Content\IMG_1703.PNG = Content\IMG_1703.PNG
+		Content\RPReplay_Final1690993265.MP4 = Content\RPReplay_Final1690993265.MP4
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
