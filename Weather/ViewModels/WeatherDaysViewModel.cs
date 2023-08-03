@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Weather.Models;
+using Weather.Services.SnackBarSevice;
 using Weather.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;

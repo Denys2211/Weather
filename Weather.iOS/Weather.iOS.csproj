@@ -75,6 +75,8 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\ScrollRender.cs" />
     <Compile Include="Renderers\SideMenuViewRenderer.cs" />
+    <Compile Include="Services\SnackBarBuilder.cs" />
+    <Compile Include="Services\SnackBarService.cs" />
     <Compile Include="Services\VibrationService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
@@ -93,6 +95,12 @@
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\IsOk.dataset\7102-verified.gif">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\IsOk.dataset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
@@ -119,5 +127,4 @@
       <Name>Weather</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
 </Project>

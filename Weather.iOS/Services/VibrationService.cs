@@ -8,7 +8,7 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(VibrationService))]
 namespace Weather.iOS.Services
 {
-    internal class VibrationService : IVibrator
+    public class VibrationService : IVibrator
     {
         public bool CanVibrate => true;
 

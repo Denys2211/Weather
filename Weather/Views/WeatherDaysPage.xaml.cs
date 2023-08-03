@@ -6,6 +6,13 @@ using System.Linq;
 using Weather.Services.VibrationService;
 using Weather.CustomControls;
 using System.Collections.Specialized;
+using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.CommunityToolkit.UI.Views.Options;
+using System.Globalization;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Weather.Services.SnackBarSevice;
 
 namespace Weather.Views
 {

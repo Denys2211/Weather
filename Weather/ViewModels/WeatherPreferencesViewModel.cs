@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Weather.Models;
+using Weather.Services.SnackBarSevice;
 using Weather.Services.VibrationService;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -71,6 +72,15 @@ namespace Weather.ViewModels
             {
                 Preferences.Set(nameof(StatusGetCoordinates), value);
                 RaisePropertyChanged(nameof(StatusGetCoordinates));
+
+                if(value)
+                {
+                    DependencyService.Get<ISnackBarService>()?.ShowSnackBar("GPS ON!!!");
+                }
+                else
+                {
+                    DependencyService.Get<ISnackBarService>()?.ShowSnackBar("GPS OFF!!!");
+                }
             }
         }
         internal string Serialize()
