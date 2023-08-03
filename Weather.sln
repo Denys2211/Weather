@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.Android", "Weather.Android\Weather.Android.csproj", "{9A9A447C-C856-4B3A-AF32-D364252DEFCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather.iOS", "Weather.iOS\Weather.iOS.csproj", "{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weather", "Weather\Weather.csproj", "{0027DA71-F7D1-47D2-9037-369356C401EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weahter.iOS", "Weather.iOS\Weahter.iOS.csproj", "{7B99B108-E1C8-409A-B3A8-14546315AC9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,20 +33,6 @@ Global
 		{9A9A447C-C856-4B3A-AF32-D364252DEFCE}.Release|iPhone.Build.0 = Release|Any CPU
 		{9A9A447C-C856-4B3A-AF32-D364252DEFCE}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{9A9A447C-C856-4B3A-AF32-D364252DEFCE}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|Any CPU.Deploy.0 = Debug|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|iPhone.Build.0 = Debug|iPhone
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|iPhone.Deploy.0 = Debug|iPhone
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Release|iPhone.ActiveCfg = Release|iPhone
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Release|iPhone.Build.0 = Release|iPhone
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{C5E2EDD4-72AB-41C0-B4A4-1AD34DEFB063}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{0027DA71-F7D1-47D2-9037-369356C401EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0027DA71-F7D1-47D2-9037-369356C401EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0027DA71-F7D1-47D2-9037-369356C401EA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
@@ -59,6 +45,19 @@ Global
 		{0027DA71-F7D1-47D2-9037-369356C401EA}.Release|iPhone.Build.0 = Release|Any CPU
 		{0027DA71-F7D1-47D2-9037-369356C401EA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{0027DA71-F7D1-47D2-9037-369356C401EA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|iPhone.Build.0 = Debug|iPhone
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|iPhone.Deploy.0 = Debug|iPhone
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Release|iPhone.ActiveCfg = Release|iPhone
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Release|iPhone.Build.0 = Release|iPhone
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{7B99B108-E1C8-409A-B3A8-14546315AC9B}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

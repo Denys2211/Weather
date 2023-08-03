@@ -6,7 +6,7 @@
   <ContentView.Content>
       <StackLayout>
             <Frame x:Name="GeneralFrame" CornerRadius="15"
-                   HasShadow="False"
+                   HasShadow="{OnPlatform Android=True, iOS=False}"
                    IsClippedToBounds="True"
                    Padding="0"
                    Margin="10"

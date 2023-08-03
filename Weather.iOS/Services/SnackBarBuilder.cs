@@ -144,7 +144,7 @@ namespace Weather.iOS.Services
             set { _messageTextAlign = value; this.MessageLabel.TextAlignment = _messageTextAlign; }
         }
 
-        private nfloat _messageMarginLeft = 4;
+        private nfloat _messageMarginLeft = 10;
         public nfloat MessageMarginLeft
         {
             get { return _messageMarginLeft; }
@@ -384,7 +384,7 @@ namespace Weather.iOS.Services
             this.BackgroundColor = UIColor.LightGray;
             this.Layer.CornerRadius = CornerRadius;
             this.Layer.MasksToBounds = true;
-            //this.Layer.ShadowColor = new UIColor(red: 0.25f, green: 0.64f, blue: 0.83f, alpha: 0.01f).CGColor;
+            //this.Layer.ShadowColor =  UIColor.Blue.CGColor;
             //this.Layer.ShadowOpacity = 0.6f;
             //this.Layer.ShadowOffset = new CGSize(360, 44);
 
@@ -399,6 +399,7 @@ namespace Weather.iOS.Services
             IconImageView.TranslatesAutoresizingMaskIntoConstraints = false;
             IconImageView.BackgroundColor = UIColor.Clear;
             IconImageView.ContentMode = IconContentMode;
+   
 
             this.AddSubview(IconImageView);
 
@@ -409,7 +410,7 @@ namespace Weather.iOS.Services
             MessageLabel.BackgroundColor = UIColor.Clear;
             MessageLabel.LineBreakMode = UILineBreakMode.CharacterWrap;
             MessageLabel.Lines = 2;
-            MessageLabel.TextAlignment = UITextAlignment.Natural;
+            MessageLabel.TextAlignment = UITextAlignment.Left;
             MessageLabel.Text = Message;
             this.AddSubview(MessageLabel);
 

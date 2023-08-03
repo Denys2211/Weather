@@ -28,6 +28,8 @@
 	<string>com.companyname.Weather</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>Weather</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -40,7 +42,9 @@
 	<string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>UILaunchStoryboardName</key>
+	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0.0</string>
 </dict>
 </plist>

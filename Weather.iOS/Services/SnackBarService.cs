@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using UIKit;
 using Weather.iOS.Services;
 using Weather.Services.SnackBarSevice;
 using Xamarin.Forms;
@@ -12,7 +13,8 @@ namespace Weather.iOS.Services
         {
             var snackBar = new SnackBarBuilder
             {
-                Message = message
+                Message = message,
+                Icon = UIImage.FromBundle("icon_about@2xWhite")
             };
 
 
