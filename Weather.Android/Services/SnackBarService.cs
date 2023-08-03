@@ -1,4 +1,9 @@
-﻿using Google.Android.Material.Snackbar;
+﻿using Android.Content.Res;
+using Android.Graphics;
+using Android.Views;
+using Android.Widget;
+using AndroidX.Core.Content;
+using Google.Android.Material.Snackbar;
 using System;
 using System.Threading.Tasks;
 using Weather.Droid.Services;
@@ -14,7 +19,11 @@ namespace Weather.Droid.Services
         public async Task ShowSnackBar(string message)
         {
             var renderer = await GetRendererWithRetries(Application.Current.MainPage) ?? throw new ArgumentException("Provided VisualElement cannot be parent to SnackBar", nameof(Application.Current.MainPage));
-            Snackbar.Make(renderer.View, message, Snackbar.LengthLong).Show();
+            var snackbar = Snackbar.Make(renderer.View, message, Snackbar.LengthLong);
+
+            snackbar.View.SetBackground(ContextCompat.GetDrawable(MainActivity.AppContext, Resource.Drawable.snackBar_shape));
+
+            snackbar.Show();
         }
 
         static async Task<IVisualElementRenderer?> GetRendererWithRetries(VisualElement element, int retryCount = 5)

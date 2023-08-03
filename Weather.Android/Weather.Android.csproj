@@ -232,7 +232,7 @@
       <Generator>
       </Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\splash_screen.xml">
+    <AndroidResource Include="Resources\drawable\snackBar_shape.xml">
       <SubType>
       </SubType>
       <Generator>
