@@ -1,5 +1,8 @@
 ﻿using Android.Content.Res;
+using Android.Gms.Common.Server.Response;
 using Android.Graphics;
+using Android.Text.Style;
+using Android.Text;
 using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Content;
@@ -18,15 +21,18 @@ namespace Weather.Droid.Services
     {
         public async Task ShowSnackBar(string message)
         {
+            //SpannableStringBuilder builderTextLeft = new SpannableStringBuilder();
+            //builderTextLeft.Append("    " + message);
+            //builderTextLeft.SetSpan(new ImageSpan(MainActivity.AppContext, Resource.Drawable.outputonlinepngtools), 0, 1, 0);
             var renderer = await GetRendererWithRetries(Application.Current.MainPage) ?? throw new ArgumentException("Provided VisualElement cannot be parent to SnackBar", nameof(Application.Current.MainPage));
-            var snackbar = Snackbar.Make(renderer.View, message, Snackbar.LengthLong);
+            var snackbar = Snackbar.Make(renderer.View, "🦝   " + message, Snackbar.LengthLong);
 
             snackbar.View.SetBackground(ContextCompat.GetDrawable(MainActivity.AppContext, Resource.Drawable.snackBar_shape));
 
             snackbar.Show();
         }
 
-        static async Task<IVisualElementRenderer?> GetRendererWithRetries(VisualElement element, int retryCount = 5)
+        static async Task<IVisualElementRenderer> GetRendererWithRetries(VisualElement element, int retryCount = 5)
         {
             var renderer = Platform.GetRenderer(element);
             if (renderer != null || retryCount <= 0)
