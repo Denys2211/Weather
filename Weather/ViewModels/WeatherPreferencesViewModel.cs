@@ -151,30 +151,60 @@ namespace Weather.ViewModels
             SaveToPropertiesApp();
         }
 
-        protected bool CheckExistCityInListAsync(string city)
+        protected async Task<bool> CheckExistCityInListAsync(string city)
         {
-            bool check = false;
-
             foreach (var item in ListCity)
             {
                 if (item.Name == city)
                 {
-                    check = true;
+                    await Application.Current.MainPage.DisplayAlert("Notification", "City is Exist", "Ok");
+                    return true;
                 }
             }
-            return check;
+
+            return false;
         }
+
+        protected async Task Save()
+        {
+            try
+            {
+                var existCity = ListCity.FirstOrDefault(c => c.Name == Current_City);
+
+
+                if (existCity != null)
+                {
+                    await ActiveCityAsync(existCity);
+                }
+                else
+                {
+                    ListCity.Insert(0, new CustomerLocation
+                    {
+                        Name = Current_City,
+                        IsSelected = true,
+                        Lat = Latitude,
+                        Lon = Longitude
+                    });
+
+                    SaveToPropertiesApp();
+                }
+
+                OnCityAdded?.Invoke(this, EventArgs.Empty);
+            }
+            finally
+            {
+                Entry_City = string.Empty;
+            }
+
+        }
+
         protected async Task Save(string city)
         {
             try
             {
-                foreach (var item in ListCity)
+                if (await CheckExistCityInListAsync(city))
                 {
-                    if (city == item.Name)
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Notification", "City is Exist", "Ok");
-                        return;
-                    }
+                    return;
                 }
 
                 var location = await ApiGeocoding.GetCoordinatesFromCityName(city);
@@ -182,14 +212,14 @@ namespace Weather.ViewModels
                 {
                     ListCity.Insert(0, new CustomerLocation
                     {
-                        Name = city,
-                        IsSelected = false,
-                        Lat = location.Latitude,
-                        Lon = location.Longitude
+                        Name = Current_City = city,
+                        IsSelected = true,
+                        Lat = Latitude = location.Latitude,
+                        Lon = Longitude = location.Longitude
                     });
 
                     SaveToPropertiesApp();
-                    await ActiveCityAsync(ListCity[0]);
+                    await MapFocusCity(Latitude, Longitude);
                 }
 
                 OnCityAdded?.Invoke(this, EventArgs.Empty);

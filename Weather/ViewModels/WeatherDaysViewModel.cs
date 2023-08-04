@@ -86,21 +86,18 @@ namespace Weather.ViewModels
 
             if (StatusGetCoordinates)
             {
-                if (await TyGetCoordinates())
-                {
-                    if (!CheckExistCityInListAsync(Current_City))
-                    {
-                        await Save(Current_City);
-                    }
-                }
-                else
+                if (!await TryGetCoordinates())
                 {
                     DependencyService.Get<ISnackBarService>()?.ShowSnackBar("Fail to get coordinates!!!");
                     return;
                 }
+                else
+                {
+                    await Save();
+                }
             }
 
-            if (ListCity.Count != 0)
+            if (ListCity.Count != 0 && !StatusGetCoordinates)
             {
                 await ActiveCityAsync();
             }
@@ -122,17 +119,18 @@ namespace Weather.ViewModels
                 }
             }
         }
-        async Task<bool> TyGetCoordinates()
+        async Task<bool> TryGetCoordinates()
         {
             Location location = await ApiGeocoding.GetLocationGPS();
-            await Task.Delay(1000);
 
             if (location != null)
             {
                 Latitude = location.Latitude;
                 Longitude = location.Longitude;
                 Current_City = await ApiGeocoding.GetCity(location);
-                DependencyService.Get<ISnackBarService>()?.ShowSnackBar($"Obtained city using GPS - {Current_City}.");
+                await MapFocusCity(Latitude, Longitude);
+
+                DependencyService.Get<ISnackBarService>()?.ShowSnackBar($"Obtained city using GPS - {Current_City}");
                 return true;
             }
             else
