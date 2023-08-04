@@ -12,7 +12,7 @@ namespace Weather.Services
         {
             try
             {
-                var request = new GeolocationRequest(GeolocationAccuracy.Default);
+                var request = new GeolocationRequest(GeolocationAccuracy.Default, TimeSpan.FromSeconds(10));
                 var location = await Geolocation.GetLocationAsync(request);
                 return location;
 

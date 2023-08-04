@@ -88,7 +88,6 @@ namespace Weather.ViewModels
             {
                 if (!await TryGetCoordinates())
                 {
-                    DependencyService.Get<ISnackBarService>()?.ShowSnackBar("Fail to get coordinates!!!");
                     return;
                 }
                 else
