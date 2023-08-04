@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using System;
 using UIKit;
 
 namespace Weather.iOS
@@ -9,6 +10,8 @@ namespace Weather.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
+        private nint _taskID;
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -23,6 +26,22 @@ namespace Weather.iOS
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override void OnActivated(UIApplication uiApplication)
+        {
+            base.OnActivated(uiApplication);
+
+        }
+
+        public override void DidEnterBackground(UIApplication uiApplication)
+        {
+            //_taskID = UIApplication.SharedApplication.BeginBackgroundTask(() =>
+            //{
+            //    DependencyService.Get<ISettingsSaveService>().SaveSettingsToPropertiesApp?.Invoke();
+            //    UIApplication.SharedApplication.EndBackgroundTask(_taskID);
+            //});
+            base.DidEnterBackground(uiApplication);
         }
     }
 }

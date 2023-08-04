@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Weather.Models;
 using Weather.Services.SnackBarSevice;
@@ -20,16 +21,7 @@ namespace Weather.ViewModels
         public ObservableCollection<CustomerLocation> ListCity { get; set; }
         public Command Delete { get; set; }
         const string CITY_LIST_PROP_NAME = "cities";
-        int index_city;
-        public int Index_City
-        {
-            get { return Preferences.Get(nameof(Index_City), 0); }
-            set
-            {
-                SetProperty(ref index_city, value);
-                Preferences.Set(nameof(Index_City), value);
-            }
-        }
+
         string entry_city;
         public string Entry_City
         {
@@ -39,11 +31,22 @@ namespace Weather.ViewModels
         string current_city;
         public string Current_City
         {
-            get { return current_city; }
-            set { SetProperty(ref current_city, value); }
+            get 
+            {
+                if(ListCity != null && ListCity.Count > 0 && current_city == null)
+                {
+                    return ListCity.Where(c => c.IsSelected).FirstOrDefault().Name;
+                }
+
+                return current_city; 
+            }
+            set
+            { 
+                SetProperty(ref current_city, value);
+            }
         }
 
-        public event EventHandler OnSityAdded;
+        public event EventHandler OnCityAdded;
 
         public WeatherPreferencesViewModel()
         {
@@ -63,7 +66,6 @@ namespace Weather.ViewModels
             SaveCommand = new Command(async () => await Save(Entry_City));
             ListCity = new ObservableCollection<CustomerLocation>();
             ReadPropertiesApp();
-
         }
         public bool StatusGetCoordinates
         {
@@ -113,30 +115,50 @@ namespace Weather.ViewModels
                         new Position(lat, lon), Distance.FromMiles(5)));
             return Task.FromResult(true);
         }
-        protected async Task ActiveCityAsync(CustomerLocation city)
+        protected async Task ActiveCityAsync(CustomerLocation city = null)
         {
-            Index_City = ListCity.IndexOf(city);
+            if (city != null)
+            {
+                Current_City = city.Name;
+            }
+
+            if(Current_City == null)
+            {
+                DependencyService.Get<ISnackBarService>()?.ShowSnackBar("Current city is empty!!!");
+                return;
+            }
+
+            var index_City = ListCity.IndexOf(ListCity.FirstOrDefault(c => c.Name == Current_City));
+
+            bool isMaping = Latitude == ListCity[index_City].Lat && Longitude == ListCity[index_City].Lon;
+
             foreach (var item in ListCity)
             {
                 item.IsSelected = false;
             }
-            Latitude = ListCity[Index_City].Lat;
-            Longitude = ListCity[Index_City].Lon;
-            Current_City = ListCity[Index_City].Name;
-            ListCity[Index_City].IsSelected = true;
-            await MapFocusCity(Latitude, Longitude);
+
+            if(StatusGetCoordinates)
+               ListCity.Move(index_City, index_City);
+
+            Latitude = ListCity[index_City].Lat;
+            Longitude = ListCity[index_City].Lon;
+            Current_City = ListCity[index_City].Name;
+            ListCity[index_City].IsSelected = true;
+
+            if(!isMaping)
+               await MapFocusCity(Latitude, Longitude);
+
             SaveToPropertiesApp();
         }
-        protected async Task<bool> CheckExistCityInListAsync(string city)
+
+        protected bool CheckExistCityInListAsync(string city)
         {
             bool check = false;
 
             foreach (var item in ListCity)
             {
-                item.IsSelected = false;
                 if (item.Name == city)
                 {
-                    await ActiveCityAsync(item);
                     check = true;
                 }
             }
@@ -170,7 +192,7 @@ namespace Weather.ViewModels
                     await ActiveCityAsync(ListCity[0]);
                 }
 
-                OnSityAdded?.Invoke(this, EventArgs.Empty);
+                OnCityAdded?.Invoke(this, EventArgs.Empty);
             }
             finally
             {

@@ -20,7 +20,7 @@ namespace Weather.Views
             _viewModel = BindingContext as WeatherPreferencesViewModel;
         }
 
-        private void _viewModel_OnSityAdded(object sender, EventArgs e)
+        private void _viewModel_OnCityAdded(object sender, EventArgs e)
         {
             _viewModel = BindingContext as WeatherPreferencesViewModel;
 
@@ -36,17 +36,17 @@ namespace Weather.Views
 
         protected override void OnAppearing()
         {
-            _viewModel.ListCity.CollectionChanged += ItemsSityControl.OnItemsChanged;
+            _viewModel.ListCity.CollectionChanged += ItemsCityControl.OnItemsChanged;
             SideMenu.OnGestureStarted += SideMenu_OnGestureFinished;
-            _viewModel.OnSityAdded += _viewModel_OnSityAdded;
+            _viewModel.OnCityAdded += _viewModel_OnCityAdded;
             base.OnAppearing();
         }
 
         protected override void OnDisappearing()
         {
-            _viewModel.ListCity.CollectionChanged -= ItemsSityControl.OnItemsChanged;
+            _viewModel.ListCity.CollectionChanged -= ItemsCityControl.OnItemsChanged;
             SideMenu.OnGestureStarted -= SideMenu_OnGestureFinished;
-            _viewModel.OnSityAdded -= _viewModel_OnSityAdded;
+            _viewModel.OnCityAdded -= _viewModel_OnCityAdded;
             base.OnDisappearing();
         }
 

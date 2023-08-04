@@ -13,12 +13,12 @@ using Xamarin.Forms.Xaml;
 namespace Weather.CustomControls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemsSityControl : ContentView
+    public partial class ItemsCityControl : ContentView
     {
         private static Dictionary<CustomerLocation, BoxView> _boxes = new Dictionary<CustomerLocation, BoxView>();
         private static WeatherPreferencesViewModel _weatherPreferencesViewModel;
 
-        public ItemsSityControl()
+        public ItemsCityControl()
         {
             InitializeComponent();
         }
@@ -28,23 +28,23 @@ namespace Weather.CustomControls
         public static readonly BindableProperty PathToCommandProperty = BindableProperty.Create(
             nameof(PathToCommand),
             typeof(object),
-            typeof(ItemsSityControl),
+            typeof(ItemsCityControl),
             null,
             BindingMode.TwoWay,
             propertyChanged: OnPathToCommandPropertyChanged);
 
-        public static readonly BindableProperty ItemSityContextProperty = BindableProperty.Create(
-            nameof(ItemSityContext),
+        public static readonly BindableProperty ItemCityContextProperty = BindableProperty.Create(
+            nameof(ItemCityContext),
             typeof(object),
-            typeof(ItemsSityControl),
+            typeof(ItemsCityControl),
             null,
             BindingMode.TwoWay,
-            propertyChanged: OnItemSityContextChanged);
+            propertyChanged: OnItemCityContextChanged);
 
-        public object ItemSityContext
+        public object ItemCityContext
         {
-            get => (object)GetValue(ItemSityContextProperty);
-            set => SetValue(ItemSityContextProperty, value);
+            get => (object)GetValue(ItemCityContextProperty);
+            set => SetValue(ItemCityContextProperty, value);
         }
 
         public object PathToCommand
@@ -53,9 +53,9 @@ namespace Weather.CustomControls
             set => SetValue(PathToCommandProperty, value);
         }
 
-        private static void OnItemSityContextChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnItemCityContextChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is ItemsSityControl control) || !(newValue is CustomerLocation model))
+            if (!(bindable is ItemsCityControl control) || !(newValue is CustomerLocation model))
                 return;
 
             control.BindingContext ??= model;
@@ -96,7 +96,7 @@ namespace Weather.CustomControls
 
         private static void OnPathToCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (!(bindable is ItemsSityControl control) || !(newValue is WeatherPreferencesViewModel model))
+            if (!(bindable is ItemsCityControl control) || !(newValue is WeatherPreferencesViewModel model))
                 return;
 
             _weatherPreferencesViewModel = model;
@@ -148,7 +148,7 @@ namespace Weather.CustomControls
 
         public static void OnItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Move)
             {
                 Reset((CustomerLocation)e.NewItems[0]);
             }

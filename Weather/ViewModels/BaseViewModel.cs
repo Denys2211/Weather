@@ -14,11 +14,11 @@ namespace Weather.ViewModels
         public IApiCallerGeocoding ApiGeocoding = DependencyService.Get<IApiCallerGeocoding>();
         protected static ForecastInfo ValueForecast { get; set; }
         protected static int Hours { get; set; }
-        bool isBusy = false;
+        bool _isBusy = false;
         public bool IsBusy
         {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
         }
         protected virtual bool SetProperty<T>(ref T backingStore, T value,
            [CallerMemberName] string propertyName = "",

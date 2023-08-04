@@ -1,5 +1,4 @@
-﻿using CoreAnimation;
-using CoreGraphics;
+﻿using CoreGraphics;
 using Foundation;
 using System;
 using UIKit;
@@ -71,7 +70,7 @@ namespace Weather.iOS.Services
                     _cornerRadius = 0;
 
                 this.Layer.CornerRadius = _cornerRadius;
-                this.Layer.MasksToBounds = true;
+                this.Layer.MasksToBounds = false;
             }
         }
 
@@ -254,7 +253,7 @@ namespace Weather.iOS.Services
         private NSLayoutConstraint secondActionButtonWidthConstraint;
         private NSLayoutConstraint iconImageViewWidthConstraint;
 
-        public SnackBarBuilder() : base(CoreGraphics.CGRect.FromLTRB(0, 0, 320, 64))
+        public SnackBarBuilder() : base(CoreGraphics.CGRect.FromLTRB(0, 0, 300, 44))
         {
             Configure();
         }
@@ -383,17 +382,24 @@ namespace Weather.iOS.Services
             this.TranslatesAutoresizingMaskIntoConstraints = false;
             this.BackgroundColor = UIColor.LightGray;
             this.Layer.CornerRadius = CornerRadius;
-            this.Layer.MasksToBounds = true;
+            this.Layer.MasksToBounds = false;
             //this.Layer.ShadowColor =  UIColor.Blue.CGColor;
-            //this.Layer.ShadowOpacity = 0.6f;
-            //this.Layer.ShadowOffset = new CGSize(360, 44);
+            //this.Layer.ShadowOpacity = 0.5f;
+            //this.Layer.ShadowRadius = 1;
+            //this.Layer.ShadowOffset = new CGSize(-1, 1);
+            var effect = UIBlurEffect.FromStyle(UIBlurEffectStyle.SystemChromeMaterialDark);
+            var viewEff = new UIVisualEffectView(effect);
+            viewEff.Frame = new CGRect(0, 0, 355, 44);
+            viewEff.Layer.CornerRadius = CornerRadius;
+            viewEff.Layer.MasksToBounds = true;
+            this.AddSubview(viewEff);
 
-            CGColor[] colors = new CGColor[] { new UIColor(red: 0.25f, green:0.64f, blue:0.83f, alpha:0.01f).CGColor,
-                new UIColor(red: 75/255, green: 128 / 255, blue: 153 / 255, alpha: 1.0f ).CGColor};
-            CAGradientLayer gradientLayer = new CAGradientLayer();
-            gradientLayer.Frame = new CGRect(0,0,360,64);
-            gradientLayer.Colors = colors;
-            this.Layer.InsertSublayer(gradientLayer, 0);
+            //CGColor[] colors = new CGColor[] { new UIColor(red: 0.25f, green:0.64f, blue:0.83f, alpha:0.01f).CGColor,
+            //    new UIColor(red: 75/255, green: 128 / 255, blue: 153 / 255, alpha: 1.0f ).CGColor};
+            //CAGradientLayer gradientLayer = new CAGradientLayer();
+            //gradientLayer.Frame = new CGRect(0,0,340,44);
+            //gradientLayer.Colors = colors;
+            //this.Layer.InsertSublayer(gradientLayer, 0);
 
             IconImageView = new UIImageView();
             IconImageView.TranslatesAutoresizingMaskIntoConstraints = false;
@@ -565,49 +571,52 @@ namespace Weather.iOS.Services
         /// </summary>
         private void DismissAnimated(bool animated)
         {
-            InvalidDismissTimer();
-
-            ActivityIndicatorView.StopAnimating();
-
-            nfloat superViewWidth = 0;
-
-            if (Superview != null)
-                superViewWidth = Superview.Frame.Width;
-
-            if (!animated)
+            if(ActivityIndicatorView != null)
             {
-                DismissAndPerformAction();
-                return;
+                InvalidDismissTimer();
+
+                ActivityIndicatorView.StopAnimating();
+
+                nfloat superViewWidth = 0;
+
+                if (Superview != null)
+                    superViewWidth = Superview.Frame.Width;
+
+                if (!animated)
+                {
+                    DismissAndPerformAction();
+                    return;
+                }
+
+                Action animationBlock = () => { };
+
+                switch (AnimationType)
+                {
+                    case SnackbarAnimationType.FadeInFadeOut:
+                        animationBlock = () => { this.Alpha = 0; };
+                        break;
+                    case SnackbarAnimationType.SlideFromBottomBackToBottom:
+                        animationBlock = () => { bottomMarginConstraint.Constant = Height; };
+                        break;
+                    case SnackbarAnimationType.SlideFromBottomToTop:
+                        animationBlock = () => { this.Alpha = 0; bottomMarginConstraint.Constant = -Height - BottomMargin; };
+                        break;
+                    case SnackbarAnimationType.SlideFromLeftToRight:
+                        animationBlock = () => { leftMarginConstraint.Constant = LeftMargin + superViewWidth; rightMarginConstraint.Constant = -RightMargin + superViewWidth; };
+                        break;
+                    case SnackbarAnimationType.SlideFromRightToLeft:
+                        animationBlock = () =>
+                        {
+                            leftMarginConstraint.Constant = LeftMargin - superViewWidth;
+                            rightMarginConstraint.Constant = -RightMargin - superViewWidth;
+                        };
+                        break;
+                };
+
+                this.SetNeedsLayout();
+
+                UIView.Animate(AnimationDuration, 0, UIViewAnimationOptions.CurveEaseIn, animationBlock, DismissAndPerformAction);
             }
-
-            Action animationBlock = () => { };
-
-            switch (AnimationType)
-            {
-                case SnackbarAnimationType.FadeInFadeOut:
-                    animationBlock = () => { this.Alpha = 0; };
-                    break;
-                case SnackbarAnimationType.SlideFromBottomBackToBottom:
-                    animationBlock = () => { bottomMarginConstraint.Constant = Height; };
-                    break;
-                case SnackbarAnimationType.SlideFromBottomToTop:
-                    animationBlock = () => { this.Alpha = 0; bottomMarginConstraint.Constant = -Height - BottomMargin; };
-                    break;
-                case SnackbarAnimationType.SlideFromLeftToRight:
-                    animationBlock = () => { leftMarginConstraint.Constant = LeftMargin + superViewWidth; rightMarginConstraint.Constant = -RightMargin + superViewWidth; };
-                    break;
-                case SnackbarAnimationType.SlideFromRightToLeft:
-                    animationBlock = () =>
-                    {
-                        leftMarginConstraint.Constant = LeftMargin - superViewWidth;
-                        rightMarginConstraint.Constant = -RightMargin - superViewWidth;
-                    };
-                    break;
-            };
-
-            this.SetNeedsLayout();
-
-            UIView.Animate(AnimationDuration, 0, UIViewAnimationOptions.CurveEaseIn, animationBlock, DismissAndPerformAction);
         }
 
         void DismissAndPerformAction()
@@ -634,7 +643,7 @@ namespace Weather.iOS.Services
                     this.Alpha = 0;
                     this.SetNeedsLayout();
 
-                    animationBlock = () => { this.Alpha = 1; };
+                    animationBlock = () => { this.Alpha = 0.8f; };
                     break;
                 case SnackbarAnimationType.SlideFromBottomBackToBottom:
                 case SnackbarAnimationType.SlideFromBottomToTop:

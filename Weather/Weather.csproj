@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Effects\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
@@ -78,10 +79,15 @@
     <EmbeddedResource Include="Images\wind.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="CustomControls\ItemsCityControl.xaml.cs">
+      <DependentUpon>ItemsCityControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="CustomControls\CustomImage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="CustomControls\ItemsSityControl.xaml">
+    <EmbeddedResource Update="CustomControls\ItemsCityControl.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

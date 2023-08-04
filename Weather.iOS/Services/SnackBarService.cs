@@ -9,16 +9,20 @@ namespace Weather.iOS.Services
 {
     internal class SnackBarService : ISnackBarService
     {
+        private SnackBarBuilder _snackBar;
+
         public Task ShowSnackBar(string message)
         {
-            var snackBar = new SnackBarBuilder
+            _snackBar?.Dismiss();
+
+             _snackBar = new SnackBarBuilder
             {
                 Message = message,
                 Icon = UIImage.FromBundle("icon_about@2xWhite")
             };
 
 
-            snackBar.Show();
+            _snackBar.Show();
 
             return Task.CompletedTask;
         }

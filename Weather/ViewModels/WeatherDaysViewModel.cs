@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Weather.Models;
@@ -20,6 +21,7 @@ namespace Weather.ViewModels
         private string descriptionWeatherNow;
         private string imageWeatherSourceNow;
         private float tempNow;
+        private bool _isLoading = false;
 
         public ObservableCollection<Daily> Days { get; set; }
         
@@ -78,22 +80,31 @@ namespace Weather.ViewModels
         }
         async Task GetForecast()
         {
+            if(_isLoading) return;
+
+            _isLoading = true;
+
             if (StatusGetCoordinates)
             {
-                await GetCoordinates();
-                
-                if (!await CheckExistCityInListAsync(Current_City))
+                if (await TyGetCoordinates())
                 {
-                    Entry_City = Current_City;
-                    await Save(Entry_City);
-                    await ActiveCityAsync(ListCity[0]);
+                    if (!CheckExistCityInListAsync(Current_City))
+                    {
+                        await Save(Current_City);
+                    }
+                }
+                else
+                {
+                    DependencyService.Get<ISnackBarService>()?.ShowSnackBar("Fail to get coordinates!!!");
+                    return;
                 }
             }
-            else if(ListCity.Count != 0)
+
+            if (ListCity.Count != 0)
             {
-                await ActiveCityAsync(ListCity[Index_City]);
+                await ActiveCityAsync();
             }
-            
+
             var url = $"https://api.openweathermap.org/data/2.5/onecall?lat={Latitude}&lon={Longitude}&appid=0f5bc762e1e2d34191f752caf96a1e60&units=metric";
             var result = await ApiWeather.Get(url);
 
@@ -104,26 +115,35 @@ namespace Weather.ViewModels
                 ValueForecast = JsonConvert.DeserializeObject<ForecastInfo>(result.Response);
 
                 GetForecastNow();
+
                 for (int i = 0; i < 7; i++)
                 {
                     Days.Add(ValueForecast.daily[i]);
                 }
-                await MapFocusCity(Latitude,Longitude);
             }
         }
-        async Task GetCoordinates()
+        async Task<bool> TyGetCoordinates()
         {
             Location location = await ApiGeocoding.GetLocationGPS();
+            await Task.Delay(1000);
+
             if (location != null)
             {
                 Latitude = location.Latitude;
                 Longitude = location.Longitude;
                 Current_City = await ApiGeocoding.GetCity(location);
+                DependencyService.Get<ISnackBarService>()?.ShowSnackBar($"Obtained city using GPS - {Current_City}.");
+                return true;
             }
+            else
+            {
+                DependencyService.Get<ISnackBarService>()?.ShowSnackBar("Fail to get location!!!");
+                return false;
+            }
+
         }
         async Task RefreshForecastAsync()
         {
-            IsBusy = true;
             try
             {
                 await GetForecast();
@@ -131,6 +151,7 @@ namespace Weather.ViewModels
             finally
             {
                 IsBusy = false;
+                _isLoading = false;
             }
 
         }
