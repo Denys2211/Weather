@@ -5,6 +5,7 @@ using Weather.ViewModels;
 using System.Linq;
 using Weather.Services.VibrationService;
 using Weather.CustomControls;
+using Xamarin.Essentials;
 
 namespace Weather.Views
 {
@@ -75,6 +76,23 @@ namespace Weather.Views
             else
             {
                 SideMenu.State = CustomControls.SideMenu.SideMenuViewState.LeftMenuShown;
+            }
+        }
+
+        private void CustomScrollView_Scrolled(object sender, ScrolledEventArgs e)
+        {
+            var scrollView = sender as ScrollView;
+            var contentSize = scrollView.ContentSize.Height;
+
+            var maxPos = contentSize - scrollView.Height;
+
+            if (Convert.ToInt16(e.ScrollY) >= Convert.ToInt16(maxPos))
+            {
+                Content.InputTransparent = false;
+            }
+            else if (Convert.ToInt16(e.ScrollY) == 0)
+            {
+                Content.InputTransparent = true;
             }
         }
     }

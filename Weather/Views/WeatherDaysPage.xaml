@@ -48,8 +48,9 @@
                      IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Padding="0" Margin="{OnPlatform Android=0, iOS='0,65,0,0'}">
 
                     <control:CustomScrollView Margin="0"
-                                      VerticalScrollBarVisibility="Never"
-                                      HorizontalScrollBarVisibility="Never">
+                                              Scrolled="CustomScrollView_Scrolled"
+                                              VerticalScrollBarVisibility="Never"
+                                              HorizontalScrollBarVisibility="Never">
                         <VisualElement.Behaviors>
                             <anim:ScrollViewScrollBehavior x:Name="Scroll"/>
                         </VisualElement.Behaviors>
@@ -258,8 +259,8 @@
                                        CornerRadius="0"
                                        BackgroundColor="WhiteSmoke"
                                        Visual="Default">
-                                    <CollectionView ItemsSource="{Binding Days}"
-                                            CompressedLayout.IsHeadless="False"
+                                    <CollectionView x:Name="Content" InputTransparent="true" ItemsSource="{Binding Days}"
+                                            CompressedLayout.IsHeadless="False" 
                                             Margin="0,0,0,0">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate>
