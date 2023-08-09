@@ -246,55 +246,55 @@
                                 </Grid>
                             </Frame>
 
-
-                            <StackLayout Grid.Row="1" Spacing="0" >
-                                <BoxView CornerRadius="20,20,0,0" 
+                            <Grid Grid.Row="1">
+                                <StackLayout  Spacing="0" >
+                                    <BoxView CornerRadius="20,20,0,0" 
                                          HeightRequest="30"
                                          Margin="0"
                                          BackgroundColor="WhiteSmoke"/>
-                                <Frame x:Name="CustomFrameView" HasShadow="False"
+                                    <Frame x:Name="CustomFrameView" HasShadow="False"
                                        Margin="0"
                                        Padding="20,0,20,20"
                                        HeightRequest="{Binding Height, Source={x:Reference GeneralPage}, Converter={StaticResource HeightConverter}}"
                                        CornerRadius="0"
                                        BackgroundColor="WhiteSmoke"
                                        Visual="Default">
-                                    <CollectionView x:Name="Content" InputTransparent="true" ItemsSource="{Binding Days}"
+                                        <CollectionView ItemsSource="{Binding Days}"
                                             CompressedLayout.IsHeadless="False" 
                                             Margin="0,0,0,0">
-                                        <CollectionView.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackLayout Margin="0">
-                                                    <Frame CornerRadius="10"
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout Margin="0">
+                                                        <Frame CornerRadius="10"
                                                            Margin="0,10,0,0"
                                                            BackgroundColor="#4f97e3"
                                                            HasShadow="False">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="*"/>
-                                                                <RowDefinition Height="*"/>
-                                                            </Grid.RowDefinitions>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="*"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Label Grid.ColumnSpan="4"
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Grid.ColumnSpan="4"
                                                                    Style="{StaticResource labelStyle}"
                                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dddd}'}"/>
-                                                            <Label Grid.Row="1"
+                                                                <Label Grid.Row="1"
                                                                    Style="{StaticResource labelStyle}"
                                                                    Grid.ColumnSpan="4"
                                                                    Text="{Binding dt, Converter={StaticResource longToDateTimeConverter}, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-                                                            <control:CustomImage EntityImageSource="{Binding weather[0].icon}"
+                                                                <control:CustomImage EntityImageSource="{Binding weather[0].icon}"
                                                                                  HeightRequest="45"
                                                                                  Scale="1"
                                                                                  Grid.RowSpan="2"
@@ -302,7 +302,7 @@
                                                                                  Grid.Column="4"
                                                                                  Grid.ColumnSpan="3"
                                                                                  HorizontalOptions="Center"/>
-                                                            <Label Grid.Row="0"
+                                                                <Label Grid.Row="0"
                                                                    Grid.RowSpan="2"
                                                                    HorizontalOptions="Center"
                                                                    VerticalOptions="Center"
@@ -311,22 +311,24 @@
                                                                    Grid.Column="8"
                                                                    Grid.ColumnSpan="2"
                                                                    Text="{Binding temp.max, Converter={StaticResource temperatureConverter}}"/>
-                                                            <Grid.GestureRecognizers>
-                                                                <TapGestureRecognizer
+                                                                <Grid.GestureRecognizers>
+                                                                    <TapGestureRecognizer
                                                                            Grid.ColumnSpan="9"
                                                                            NumberOfTapsRequired="1"
                                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:WeatherDaysViewModel}}, Path=OnForecastHourly}"
                                                                            CommandParameter="{Binding .}">
-                                                                 </TapGestureRecognizer>
-                                                            </Grid.GestureRecognizers>
-                                                        </Grid>
-                                                    </Frame>
-                                                </StackLayout>
-                                            </DataTemplate>
-                                        </CollectionView.ItemTemplate>
-                                    </CollectionView>
-                                </Frame>
-                            </StackLayout>
+                                                                    </TapGestureRecognizer>
+                                                                </Grid.GestureRecognizers>
+                                                            </Grid>
+                                                        </Frame>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </Frame>
+                                </StackLayout>
+                                <BoxView x:Name="Content" InputTransparent="False"/>
+                            </Grid>
                         </Grid>
                     </control:CustomScrollView>
                 </RefreshView>

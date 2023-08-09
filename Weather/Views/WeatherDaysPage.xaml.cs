@@ -88,11 +88,11 @@ namespace Weather.Views
 
             if (Convert.ToInt16(e.ScrollY) >= Convert.ToInt16(maxPos))
             {
-                Content.InputTransparent = false;
+                Content.InputTransparent = true;
             }
             else if (Convert.ToInt16(e.ScrollY) == 0)
             {
-                Content.InputTransparent = true;
+                Content.InputTransparent = false;
             }
         }
     }

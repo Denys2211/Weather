@@ -15,7 +15,7 @@ namespace Weather.CustomControls.SideMenu
 
         private const string AnimationName = nameof(SideMenuView);
 
-        private const uint AnimationRate = 16;
+        private static readonly int AnimationRate = RuntimePlatform == Android ? 6 : 16;
 
         private const uint AnimationLength = 350;
 
@@ -25,7 +25,7 @@ namespace Weather.CustomControls.SideMenu
 
         private static readonly Easing AnimationEasing = Easing.SinOut;
 
-        private static readonly TimeSpan SwipeThresholdTime = TimeSpan.FromMilliseconds(RuntimePlatform == Android ? 100 : 60);
+        private static readonly TimeSpan SwipeThresholdTime = TimeSpan.FromMilliseconds(RuntimePlatform == Android ? 70 : 60);
 
         #endregion
 
@@ -338,8 +338,9 @@ namespace Weather.CustomControls.SideMenu
                 SetOverlayViewInputTransparent(state);
                 return;
             }
-            var animation = new Animation(v => TryUpdateDiff(v, true), Diff, end);
-            _mainView.Animate(AnimationName, animation, AnimationRate, animationLength, AnimationEasing, (v, isCanceled) =>
+
+            var animation = new Animation(v => TryUpdateDiff(v, true), Diff, end, Easing.Linear);
+            _mainView.Animate(AnimationName, animation, (uint)AnimationRate, animationLength, AnimationEasing, (v, isCanceled) =>
             {
                 if (isCanceled)
                 {
