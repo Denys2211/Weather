@@ -72,6 +72,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CustomEntryRenderer.cs" />
+    <Compile Include="Renderers\NoBounceCollectionViewRender.cs" />
     <Compile Include="Renderers\ScrollRender.cs" />
     <Compile Include="Renderers\SideMenuViewRenderer.cs" />
     <Compile Include="Services\AnimatedImageVieService.cs" />
